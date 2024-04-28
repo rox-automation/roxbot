@@ -1,10 +1,30 @@
-# ROXBOT - a KISS (Keep It Simple, Stupid) Robotics Framework
+# ROXBOT - a Pythonic robotics toolkit
 
-## About
+## What is this repo?
 
-ROS is a big name in robotics, known for its powerful but complex features. ROXBOT aims to simplify this by integrating modern, streamlined technologies like Docker, asyncio, and pydantic. This approach makes ROXBOT not only easier to use but also more robust and efficient.
+This repository provides a series of examples and reusable library code for building robotic systems.
+Common use case is an AGV, navigating with an RTK-GPS module.
 
-Our project demonstrates this approach through a functional model of an RTK-GPS guided autonomous vehicle.
+
+## What about ROS?
+
+Well, ROS2 has some nice concepts, but it can be complex and complicated. Besides, ROS is C++ centric, which makes it a bit old-fashioned. Another shortcoming is a large codebase that has not been widely tried and tested in real world applications.
+
+## What is `Roxbot`?
+
+*Roxbot* aspires to be a more pythonic way of programming robotics.
+
+It follows these key principles:
+
+* **KISS (keep it simple, stupid)**: - let's make robotics easier by reducing complexity.
+* **Less Code Equals Fewer Problems:** - keep codebase small and portable
+* **Don't reinvent the wheel** - leverage robust existing technologies. Think of `asyncio`, `Docker` etc.
+
+## What goes where
+
+* `examples` - collection of examples around building an example AGV
+* `src` - library code
+
 
 ## Concepts
 
