@@ -1,0 +1,26 @@
+{
+  "initializeCommand": "mkdir -p /var/tmp/container-extensions", // executed on HOST system
+  // "postCreateCommand": "./init_container.sh",
+  "image": "registry.gitlab.com/roxautomation/images/python-dev",
+
+  "mounts": [
+    "source=/var/tmp/container-extensions,target=/home/dev/.vscode-server/extensions,type=bind,consistency=cached"
+  ],
+
+
+  // Configure tool-specific properties.
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "shardulm94.trailing-spaces",
+        "njpwerner.autodocstring",
+        "mhutchie.git-graph",
+        "doi.fileheadercomment",
+        "donjayamanne.githistory",
+        "charliermarsh.ruff"
+      ]
+    }
+  }
+}
