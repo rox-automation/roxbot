@@ -1,5 +1,6 @@
 # Basic line follower example
 
+Data flow:
 
 ```mermaid
 
@@ -10,11 +11,47 @@ graph TD
 
 ```
 
+
 The system consists of 3 nodes:
 
 * **controller** - uses  pure pursuit control algorithm to follow a line along x-axis
 * **diffdrive** - simulates a differential drive robot
 * **odometry** - keeps track of robot orientation based on dead reckoning
+
+Each node is a class, running its own coroutines. 
+
+A class diagram would look like this:
+
+```mermaid
+classDiagram
+
+
+class Controller {
+    set_ab_line(a,b)
+}
+
+class Machine{
+
+    get_pose() -> Pose
+    cmd_vel(twist)
+}
+
+class DiffDrive{
+    set_vel(k)
+    get_pos() -> sl,sr
+
+}
+class Wheel {
+    set_vel(v)
+    get_dst():->s
+}
+
+Controller  o-- Machine
+Machine o-- DiffDrive
+DiffDrive *--"2"Wheel
+
+
+```
 
 
 **Note:** we are assuming perfect odometry tracking here. In real world, this is not the case and odometry values are subject to drift. To solve this, sensor fusion techiques are often used like particle filters or Kalman filter.
