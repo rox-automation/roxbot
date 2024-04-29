@@ -39,19 +39,20 @@ class Machine{
 class DiffDrive{
     set_vel(k)
     get_pos() -> sl,sr
+}
 
 class Odometry{
     update(sl,sr)
     get_pose() -> Pose
 }
-}
+
 class Wheel {
     set_vel(v)
     get_dst() ->s
 }
 
 Controller  o-- Machine
-Machine o-- DiffDrive
+Machine *-- DiffDrive
 DiffDrive *--"2"Wheel
 DiffDrive *-- Odometry
 
