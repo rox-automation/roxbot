@@ -1,6 +1,6 @@
 {
   "initializeCommand": "mkdir -p /var/tmp/container-extensions", // executed on HOST system
-  // "postCreateCommand": "./init_container.sh",
+  "postCreateCommand": "./init_container.sh",
   "image": "registry.gitlab.com/roxautomation/images/python-dev",
 
   "mounts": [

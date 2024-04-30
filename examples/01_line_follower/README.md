@@ -18,7 +18,7 @@ The system consists of 3 nodes:
 * **diffdrive** - simulates a differential drive robot
 * **odometry** - keeps track of robot orientation based on dead reckoning
 
-Each node is a class, running its own coroutines. 
+Each node is a class, running its own coroutines.
 
 A class diagram would look like this:
 
