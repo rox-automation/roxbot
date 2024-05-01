@@ -43,8 +43,7 @@ dev = [
     "mypy",
     "pytest",
     "pytest-cov",
-    "pytest-asyncio",
-    "ipython"
+    "pytest-asyncio"
 ]
 
 [tool.hatch.metadata.hooks.from-filesystem]

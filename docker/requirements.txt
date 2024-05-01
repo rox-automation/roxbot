@@ -1,0 +1,11 @@
+aiomqtt
+pydantic
+pydantic-settings
+click
+coloredlogs
+orjson
+ruff
+mypy
+pytest
+pytest-cov
+pytest-asyncio
