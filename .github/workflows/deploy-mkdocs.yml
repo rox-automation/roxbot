@@ -19,8 +19,8 @@ jobs:
       IMAGE: ghcr.io/rox-automation/roxbot:latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2j
+      - name: Check out code
+        uses: actions/checkout@v2
 
       - name: Log in to the Container registry
         uses: docker/login-action@v1
