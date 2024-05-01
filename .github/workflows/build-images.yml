@@ -15,8 +15,8 @@ jobs:
       contents: read
       packages: write
     env:
-      IMAGE_NAME: mkdocs
-      USERNAME: ${{ github.repository_owner }}
+      IMAGE_NAME: roxbot
+      USERNAME: rox-automation
     steps:
       - name: Check out code
         uses: actions/checkout@v2
