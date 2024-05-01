@@ -1,9 +1,27 @@
 site_name: Roxbot blog
+site_url: https://rox-automation.github.io/roxbot
+
+# Repository
+repo_name: roxbot
+repo_url: https://github.com/rox-automation/roxbot
+edit_uri: edit/main/docs
 
 theme:
   name: material
+  features:
+    - content.action.edit
   palette:
-    primary: green
+    - scheme: default
+      primary: green
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+
+    - scheme: slate
+      primary: green
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
 
 plugins:
   - blog:
