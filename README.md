@@ -51,6 +51,8 @@ ROXBOT takes familiar ideas from ROS2 and makes them easier to use and more Pyth
 
 This repository provides a `.devcontainer` environment that can be used in VSCode. For more information, read [VSCode containers docs](https://code.visualstudio.com/docs/devcontainers/containers)
 
+The source for devcontainer image is located in `docker/dev`. It is built by github actions and hosted at `ghcr.io/rox-automation/roxbot:latest`
+
 
 ### CI
 
