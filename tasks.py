@@ -5,6 +5,7 @@ from invoke import task
 
 # Constants
 CI_IMG = "roxbot-ci"
+MKDOCS_IMG = "roxbot-mkdocs"
 
 
 @task
