@@ -20,10 +20,16 @@ It follows these key principles:
 * **Less Code Equals Fewer Problems:** - keep codebase small and portable
 * **Don't reinvent the wheel** - leverage robust existing technologies. Think of `asyncio`, `Docker` etc.
 
-## What goes where
+## Repository overview
 
-* `examples` - collection of examples around building an example AGV
-* `src` - library code
+    ├── docker  -  source for docker images
+    │   ├── ci  -  image for running ci locally
+    │   └── dev -  development image for devcontainer
+    ├── examples
+    │   └── line_follower  - basic linie following example
+    ├── src     -  library code
+    │   └── roxbot
+    └── tests   -  library tests
 
 
 ## Concepts
