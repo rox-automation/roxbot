@@ -2,4 +2,4 @@
 
 ## Quick links
 
-* [blog](/blog)
+* [blog](blog)

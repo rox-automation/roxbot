@@ -1,3 +1,7 @@
+# caches etc
+.ruff_cache
+site/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
