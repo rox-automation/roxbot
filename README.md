@@ -41,6 +41,14 @@ ROXBOT takes familiar ideas from ROS2 and makes them easier to use and more Pyth
 
 ## Development workflow
 
+### Prerequisites
+
+* VSCode with devcontainer extension intalled
+* `invoke` - python automation tool (`pip install invoke`)
+* `docker`
+
+### Working in devcontainer
+
 This repository provides a `.devcontainer` environment that can be used in VSCode. For more information, read [VSCode containers docs](https://code.visualstudio.com/docs/devcontainers/containers)
 
 
@@ -49,6 +57,6 @@ This repository provides a `.devcontainer` environment that can be used in VSCod
 `ci_script.sh` executes linting and testing steps. This script can be run from a devcontainer or in a CI environment.
 CI can be run in these ways:
 
-* on *host* machine, run `make ci`. This will build a CI docker container, copy source code into it an run it. Because of caching, this is the fastest way to run ci in a clean envirionment.
+* on *host* machine, run `invoke ci`. This will build a CI docker container, copy source code into it an run it. Because of caching, this is the fastest way to run ci in a clean envirionment.
 * in *devcontainer* run `./ci_script.sh`.
 * automated CI with github actions: TODO
