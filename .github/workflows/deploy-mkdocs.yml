@@ -1,0 +1,40 @@
+name: Deploy MkDocs Site
+
+on:
+  push:
+    branches:
+      - main # Trigger the workflow on push to main branch
+    paths:
+      - "docs/**"
+      - "mkdocs.yml"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pull the Docker image
+        run: docker pull ghcr.io/${{ env.USERNAME }}/${{ env.IMAGE_NAME }}:latest
+
+      - name: Run MkDocs build
+        run: |
+          docker run --rm -v ${{ github.workspace }}/docs:/docs -v ${{ github.workspace }}/site:/site ghcr.io/${{ env.USERNAME }}/${{ env.IMAGE_NAME }}:latest mkdocs build -f /docs/mkdocs.yml -d /site
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
