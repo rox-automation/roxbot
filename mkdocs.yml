@@ -1,4 +1,4 @@
-site_name: Roxbot Docs
+site_name: Roxbot blog
 
 theme:
   name: material
@@ -6,7 +6,8 @@ theme:
     primary: green
 
 plugins:
-  - blog
+  - blog:
+      blog_dir: .
   - search
 
 markdown_extensions:
