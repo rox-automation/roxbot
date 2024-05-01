@@ -1,0 +1,23 @@
+{
+    "workbench.colorCustomizations": {
+      "titleBar.activeBackground": "#4cae4f",
+      "titleBar.inactiveBackground": "#4cae4f",
+      "titleBar.activeForeground": "#000",
+      "titleBar.inactiveForeground": "#000",
+    },
+
+    "[python]": {
+      "editor.formatOnSave": true,
+      "editor.defaultFormatter": "charliermarsh.ruff",
+      "editor.defaultFoldingRangeProvider": "charliermarsh.ruff"
+    },
+    "yaml.customTags": [
+      "tag:yaml.org,2002:python/name:pymdownx.superfences.fence_code_format"
+    ],
+    "fileHeaderComment.parameter": {
+      "*": {
+        "company": "ROX Automation",
+        "pybang": "#!/usr/bin/env python3"
+      }
+    }
+  }
