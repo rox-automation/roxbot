@@ -1,7 +1,7 @@
 {
   "initializeCommand": "mkdir -p /var/tmp/container-extensions", // executed on HOST system
   "postCreateCommand": "./init_container.sh",
-  "image": "registry.gitlab.com/roxautomation/images/python-dev",
+  "image": "ghcr.io/rox-automation/roxbot:latest",
 
   "mounts": [
     "source=/var/tmp/container-extensions,target=/home/dev/.vscode-server/extensions,type=bind,consistency=cached"
