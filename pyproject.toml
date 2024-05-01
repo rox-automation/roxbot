@@ -23,11 +23,12 @@ classifiers = [
 ]
 dependencies = [
     "aiomqtt",
-    "pydantic",
-    "pydantic-settings",
     "click",
     "coloredlogs",
-    "orjson"
+    "numpy",
+    "orjson",
+    "pydantic-settings",
+    "pydantic",
 ]
 requires-python = ">=3.12"
 
@@ -73,4 +74,6 @@ log_cli_date_format = "%H:%M:%S"
 [tool.coverage.run]
 omit = [
     "tests/*",
+    "src/roxbot/cli.py",
+    "src/roxbot/version.py",
 ]

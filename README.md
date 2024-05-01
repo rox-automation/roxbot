@@ -37,3 +37,18 @@ ROXBOT takes familiar ideas from ROS2 and makes them easier to use and more Pyth
 - **Subsystems**: This term refers to a group of Nodes that work together to perform a broader function like motion control or data logging. These subsystems can be packaged into Docker containers for easy deployment and scaling.
 
 - **System**: This is the complete set of subsystems working together as a whole, forming a fully functional robotic system. We manage these as a Docker stack to ensure they are robust and scalable.
+
+
+## Development workflow
+
+This repository provides a `.devcontainer` environment that can be used in VSCode. For more information, read [VSCode containers docs](https://code.visualstudio.com/docs/devcontainers/containers)
+
+
+### CI
+
+`ci_script.sh` executes linting and testing steps. This script can be run from a devcontainer or in a CI environment.
+CI can be run in these ways:
+
+* on *host* machine, run `make ci`. This will build a CI docker container, copy source code into it an run it. Because of caching, this is the fastest way to run ci in a clean envirionment.
+* in *devcontainer* run `./ci_script.sh`.
+* automated CI with github actions: TODO

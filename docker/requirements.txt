@@ -1,11 +1,12 @@
 aiomqtt
-pydantic
-pydantic-settings
 click
 coloredlogs
-orjson
-ruff
 mypy
+numpy
+orjson
+pydantic
+pydantic-settings
 pytest
-pytest-cov
 pytest-asyncio
+pytest-cov
+ruff

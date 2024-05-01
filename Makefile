@@ -15,7 +15,7 @@ list:
 	@cat Makefile
 
 clean:
-	rm -rf dist build venv public public
+	rm -rf dist build .mypy_cache .pytest_cache .ruff_cache
 
 lint:
 	ruff check src
