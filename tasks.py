@@ -1,5 +1,6 @@
 # type: ignore
 import os
+from click import prompt
 from invoke import task
 
 # Constants
@@ -9,9 +10,20 @@ CI_IMG = "roxbot-ci"
 @task
 def clean(ctx):
     """
-    Remove all build, test, coverage and Python artifacts to maintain a clean environment.
+    Remove all files and directories that are not under version control to ensure a pristine working environment.
+    Use caution as this operation cannot be undone and might remove untracked files.
+
     """
-    ctx.run("rm -rf dist build .mypy_cache .pytest_cache .ruff_cache")
+
+    ctx.run("git clean -nfdx")
+
+    if (
+        prompt(
+            "Are you sure you want to remove all untracked files? (y/n)", default="n"
+        )
+        == "y"
+    ):
+        ctx.run("git clean -fdx")
 
 
 @task
