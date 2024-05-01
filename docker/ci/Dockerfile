@@ -5,7 +5,7 @@ FROM python:3-slim
 
 
 # install requirements
-COPY docker/requirements.txt requirements.txt
+COPY docker/ci/requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 WORKDIR /workspace

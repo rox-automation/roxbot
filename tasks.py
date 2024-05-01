@@ -63,5 +63,5 @@ def ci(ctx):
     Build and run a Docker container locally to simulate the Continuous Integration process. This helps in testing
     the Docker environment before deploying.
     """
-    ctx.run(f"docker build -t {CI_IMG} -f docker/Dockerfile.ci .")
+    ctx.run(f"docker build -t {CI_IMG} -f docker/ci/Dockerfile .")
     ctx.run(f"docker run {CI_IMG}")
