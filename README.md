@@ -5,7 +5,9 @@
 Project `roxbot` is a handbook for robotcs developers. It is intended as a knowledge base, providing a series of examples, reusable library code and tips and tricks for building robotic systems.
 Common use case is an AGV, navigating with an RTK-GPS module.
 
+## Project roadmap
 
+see [discussion](https://github.com/rox-automation/roxbot/discussions/2)
 
 ## Quick start
 
