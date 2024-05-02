@@ -1,9 +1,10 @@
 ## How to contribute
 
-This project can only succeed with joint efforts of pythonista-roboticists and innovative machine builders. This is what you can do to make this project a succes:
+This is what you can do to make this project a succes:
 
 * Star the github repo - this promotes its visibility
-* Join the discussion on the [forum](https://github.com/rox-automation/roxbot/discussions) - we'd love to know how we can make python robotics development easier.
+* Join the discussion on the [forum](https://github.com/rox-automation/roxbot/discussions) - we'd love to know how we can make robotics development easier.
+* Find something worth fixing? Submit an issue.
 * Write a blog post or add to documentation by creating a pull request.
 
 
