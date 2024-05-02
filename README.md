@@ -9,11 +9,14 @@ Common use case is an AGV, navigating with an RTK-GPS module.
 
 see [roadmap discussion](https://github.com/rox-automation/roxbot/discussions/2)
 
+**Note:** watch this repository to be notified about updates. (we don't do spammy mailing lists)
+
 ## Quick start
 
 * [read the blog](https://rox-automation.github.io/roxbot/blog)
 * [join discussion](https://github.com/rox-automation/roxbot/discussions)
 * [join the project!](https://rox-automation.github.io/roxbot/contributing)
+
 
 ## What about ROS?
 
