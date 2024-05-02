@@ -9,7 +9,7 @@ Common use case is an AGV, navigating with an RTK-GPS module.
 
 ## Quick start
 
-* [read the blog](https://rox-automation.github.io/blog)
+* [read the blog](https://rox-automation.github.io/roxbot/blog)
 * [join discussion](https://github.com/rox-automation/roxbot/discussions)
 * [join the project!](https://rox-automation.github.io/roxbot/contributing)
 
