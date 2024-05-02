@@ -9,7 +9,7 @@ Common use case is an AGV, navigating with an RTK-GPS module.
 
 ## Quick start
 
-* [read the blog](blog)
+* [read the blog](https://rox-automation.github.io/blog)
 * [join discussion](https://github.com/rox-automation/roxbot/discussions)
 * [join the project!](https://rox-automation.github.io/roxbot/contributing)
 
@@ -17,10 +17,8 @@ Common use case is an AGV, navigating with an RTK-GPS module.
 
 Well, ROS2 has some nice concepts, but it can be complex and complicated. Besides, ROS is C++ centric, which makes it a bit old-fashioned. Another shortcoming is a large codebase that has not been widely tried and tested in real world applications.
 
-## What is `Roxbot`?
+## Key principles
 
-
-It follows these key principles:
 
 * **KISS (keep it simple, stupid)**: - let's make robotics easier by reducing complexity.
 * **Less Code Equals Fewer Problems:** - keep codebase small and portable
