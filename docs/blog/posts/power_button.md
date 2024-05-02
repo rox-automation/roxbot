@@ -4,6 +4,8 @@ date: 2023-12-22
 categories:
   - rpi
   - hardware
+authors:
+  - jev
 ---
 
 # Effortlessly Add a Heartbeat and Power Button to Your Raspberry Pi

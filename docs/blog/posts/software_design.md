@@ -2,7 +2,9 @@
 draft: false
 date: 2023-12-01
 categories:
-  - development
+  - dev-tips
+authors:
+  - jev
 ---
 
 # Solid Software Design Principles for Robotics Developers

@@ -4,6 +4,8 @@ date: 2023-12-13
 categories:
   - ROS2
   - asyncio
+authors:
+  - jev
 ---
 
 # Why asyncio is Ideal for Robotics Development

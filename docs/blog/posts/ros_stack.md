@@ -4,6 +4,8 @@ date: 2023-06-11
 categories:
   - ROS2
   - cicd
+authors:
+  - jev
 ---
 
 
