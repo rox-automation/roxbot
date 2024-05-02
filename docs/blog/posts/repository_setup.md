@@ -9,7 +9,7 @@ authors:
 
 
 
-# Well begun is half done
+# Repository structure
 
 As Aristotle famously said, "Well begun is half done." This is particularly true when starting a new software project. In this post, I'll explain why Continuous Integration (CI) is crucial in modern software development, especially in complex fields like robotics. We'll also look at how CI/CD principles are implemented in the `roxbot` repository, providing practical insights and inviting you to explore the repository's code for more details.
 
