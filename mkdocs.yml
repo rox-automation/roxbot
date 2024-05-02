@@ -1,4 +1,4 @@
-site_name: Roxbot blog
+site_name: Roxbot project
 site_url: https://rox-automation.github.io/roxbot
 
 # Repository
@@ -8,6 +8,7 @@ edit_uri: edit/main/docs
 
 theme:
   name: material
+  logo: img/rox_logo_white.svg
   features:
     - content.action.edit
   palette:
@@ -24,8 +25,7 @@ theme:
         name: Switch to light mode
 
 plugins:
-  - blog:
-      blog_dir: .
+  - blog
   - search
 
 markdown_extensions:
