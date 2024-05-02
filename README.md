@@ -7,7 +7,7 @@ Common use case is an AGV, navigating with an RTK-GPS module.
 
 ## Project roadmap
 
-see [discussion](https://github.com/rox-automation/roxbot/discussions/2)
+see [roadmap discussion](https://github.com/rox-automation/roxbot/discussions/2)
 
 ## Quick start
 
