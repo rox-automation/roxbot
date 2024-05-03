@@ -59,6 +59,10 @@ class DiffDriveModel:
         return self.pose
 
     @property
+    def setpoints(self) -> Tuple[float, float]:
+        return (self.left_wheel.setpoint, self.right_wheel.setpoint)
+
+    @property
     def vl(self) -> float:
         return self.left_wheel.velocity_ms
 
@@ -119,9 +123,6 @@ class DiffDriveModel:
 
         self.left_wheel.set_velocity_ms(left_velocity)
         self.right_wheel.set_velocity_ms(right_velocity)
-
-    async def main(self) -> None:
-        pass
 
     def __repr__(self) -> str:
         return f"diffdrive vels: ({self.vl:.2f},{self.vr:.2f}) C={self.curvature}"

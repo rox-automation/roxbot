@@ -37,18 +37,3 @@ class MachineProtocol(Protocol):
             v_linear (float): driving velocity
             curvature (float): driving curvature (1/radius)
         """
-
-    async def main(self) -> None:
-        """main loop of the machine"""
-
-
-class MachineSimulatorProtocol(MachineProtocol):
-    """Extension of MachineProtocol for machines with a simulator"""
-
-    def step(self, dt: float) -> None:
-        """
-        Perform a timestep.
-
-        Args:
-            dt (float): Time delta for the step.
-        """

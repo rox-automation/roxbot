@@ -71,6 +71,11 @@ class Wheel:
         self._distance = self.distance
         return ds
 
+    @property
+    def setpoint(self) -> float:
+        """get velocity setpoint in m/s"""
+        return self._model.setpoint
+
     def set_velocity_ms(self, v: float) -> None:
         """set velocity in m/s"""
         self._model.setpoint = v
