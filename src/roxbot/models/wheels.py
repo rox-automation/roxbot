@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
- Driving and steering wheels
+Driving and steering wheels
 
- Copyright (c) 2023 ROX Automation - Jev Kuznetsov
+Copyright (c) 2023 ROX Automation - Jev Kuznetsov
 """
 
 import math
@@ -54,7 +54,7 @@ class Wheel:
         return self._model.val / self._circumference
 
     @property
-    def velocity_ms(self):
+    def velocity_ms(self) -> float:
         """axle velocity in m/s"""
         return self._model.val
 

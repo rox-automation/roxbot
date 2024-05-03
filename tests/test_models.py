@@ -1,6 +1,7 @@
 import pytest
 import math
-from roxbot.models import LinearModel, Wheel
+from roxbot.models import LinearModel, Wheel, DiffDriveModel
+from roxbot.interfaces import MachineProtocol, Pose
 
 
 def test_linear_model_init() -> None:
@@ -139,3 +140,9 @@ def test_wheel_properties() -> None:
     assert wheel.rps == 0.0
     assert wheel.revolutions == 0.0
     assert wheel.ds == 0.0
+
+
+def test_diff_drive() -> None:
+    drv: MachineProtocol = DiffDriveModel()
+
+    assert drv.get_pose() == Pose()
