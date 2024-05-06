@@ -39,7 +39,7 @@ Here are some key limitations I encountered with ROS, particularly from a Python
 
 ## Introducing Roxbot: A Pythonic ROS Alternative
 
-Confronted daily with these challenges in ROS, I was motivated to find solutions to streamline my work. Over the past year, I've been developing a Python-centric robotics framework named "Roxbot". This framework is akin to ROS but is designed to overcome the limitations I've encountered. Currently, Roxbot is in its pre-release phase and can be explored on [GitLab](https://gitlab.com/roxautomation/roxbot) and in [online documentation](https://roxautomation.gitlab.io/roxbot/how_it_works/) Note that while Roxbot is not ready for release as a full-fledged ROS replacement, it contains many bits and pieces that
+Confronted daily with these challenges in ROS, I was motivated to find solutions to streamline my work. Over the past year, I've been developing a Python-centric robotics framework named "Roxbot". This framework is akin to ROS but is designed to overcome the limitations I've encountered. Currently, Roxbot is in its pre-release phase and can be explored on [Github](https://github.com/rox-automation/roxbot) Note that while Roxbot is not ready for release as a full-fledged ROS replacement, it contains many bits and pieces that
 I've been using in various customer projects over the course of last year.
 
 
@@ -213,4 +213,4 @@ speaks for itself.
 
 
 !!! question "Interested?"
-    Are you passionate about robotics and Python, dreaming of a "Pythonic ROS"? You're not alone! I'm on a quest to develop Roxbot, and I'd love to collaborate with like-minded developers. If this resonates with you, let's connect and contribute together. Your insights, experience, and enthusiasm could be the perfect addition to this journey. Don't hesitate to reach out – let's make Roxbot not just a tool, but a community-driven success.
+    Are you passionate about robotics and Python, dreaming of a "Pythonic ROS"? You're not alone! I'm on a quest to develop Roxbot, and I'd love to collaborate with like-minded developers. 
