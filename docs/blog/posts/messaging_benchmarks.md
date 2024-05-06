@@ -59,6 +59,7 @@ The benchmark involves various scenarios with nodes named `Alice` and `Bob` comm
 - **MQTT Benchmark**: Separate containers using `paho.mqtt` with a Mosquitto broker, over an isolated Docker network.
 - **Async Benchmark**: Same container, nodes communicate via `asyncio.Queue`.
 - **Websocket Benchmark**: Separate containers, nodes communicate using `websockets`.
+- **RPC Benchmark**:  `grpc` remote call. Note that this is different from other methods as it uses request/reply instead of pub/sub
 
 ### Benchmark Methodology:
 
