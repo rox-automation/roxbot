@@ -55,11 +55,8 @@ packages = {include = ["roxbot"], from = "src"}
 [tool.mypy]
 # Global options can be specified here
 disallow_untyped_defs = true
-
-# Add configuration for the coloredlogs library
-[[tool.mypy.overrides]]
-module = "mypy.coloredlogs.*"
 ignore_missing_imports = true
+
 
 #-----------------pytest configuration----------------
 [tool.pytest.ini_options]
