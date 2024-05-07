@@ -1,5 +1,17 @@
 # Basic line follower example
 
+
+!!! note
+    This example is work-in-progress
+
+## Planned
+
+* [ ] demo notebook
+
+
+
+## Design
+
 Data flow:
 
 ```mermaid
