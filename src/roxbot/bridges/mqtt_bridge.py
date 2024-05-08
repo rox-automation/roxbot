@@ -36,6 +36,7 @@ class MqttBridge(Bridge):
         self.config = config or MqttConfig()
 
         self._client: mqtt.Client | None = None
+        self._client_ready = asyncio.Event()
 
         self._log = logging.getLogger(self.__class__.__name__)
         self._mqtt_queue: asyncio.Queue[MqttMessageProtocol] = asyncio.Queue(10)
@@ -74,6 +75,9 @@ class MqttBridge(Bridge):
 
     async def subscribe(self, topic: str) -> None:
         """subscribe to topic"""
+
+        await asyncio.wait_for(self._client_ready.wait(), timeout=1)
+
         if self._client is None:
             raise RuntimeError("MQTT client not initialized")
 
@@ -95,6 +99,7 @@ class MqttBridge(Bridge):
 
         async with mqtt.Client(self.config.host, port=self.config.port) as client:
             self._client = client
+            self._client_ready.set()
             async with asyncio.TaskGroup() as tg:
                 tg.create_task(self._receive_mqtt(client))
                 tg.create_task(self._publish_mqtt(client))

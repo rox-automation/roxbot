@@ -49,7 +49,6 @@ async def main() -> None:
     async with asyncio.TaskGroup() as tg:
         tg.create_task(bridge.main())
 
-        await asyncio.sleep(0.1)  # wait for bridge to connect
         await bridge.subscribe(SUB_TOPIC)
 
         tg.create_task(send_messages(bridge))

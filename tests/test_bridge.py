@@ -32,7 +32,7 @@ def test_register_callback():
     bridge = DummyBridge()
 
     bridge.register_callback("test_topic", callback_no_args)
-    assert "test_topic" in bridge._cmd_callbacks
+    assert "test_topic" in bridge._topic_callbacks
 
 
 def test_remove_callback():
@@ -40,7 +40,7 @@ def test_remove_callback():
 
     bridge.register_callback("test_topic", callback_no_args)
     bridge.remove_callback("test_topic")
-    assert "test_topic" not in bridge._cmd_callbacks
+    assert "test_topic" not in bridge._topic_callbacks
 
 
 def test_execute_command_simple():
