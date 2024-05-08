@@ -26,7 +26,7 @@ Well, ROS2 has some nice concepts, but it can be complex and complicated. Beside
 
 
 * **KISS (keep it simple, stupid)**: - let's make robotics easier by reducing complexity.
-* **Less Code Equals Fewer Problems:** - keep codebase small and portable
+* **Less Code Equals Fewer Problems:** - keep codebase small and portable. "*Code is not an asset but a [liability](https://wiki.c2.com/?SoftwareAsLiability)*"
 * **Don't reinvent the wheel** - leverage robust existing technologies. Think of `asyncio`, `Docker` etc.
 
 
