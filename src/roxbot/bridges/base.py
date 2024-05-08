@@ -31,7 +31,7 @@ class Bridge(ABC):
 
     def __init__(self, name: str = "Bridge") -> None:
         self._log = logging.getLogger(name)
-        self._cmd_callbacks: Dict = {}  # receive data callbacks
+        self._topic_callbacks: Dict[str, Callable] = {}  # topic callbacks
 
         # logging queue
         self._log_q: asyncio.Queue = asyncio.Queue(LOG_Q_LENGTH)
@@ -48,14 +48,14 @@ class Bridge(ABC):
 
     def register_callback(self, topic: str, fcn: Callable) -> None:
         """add callback to topic."""
-        if topic in self._cmd_callbacks:
+        if topic in self._topic_callbacks:
             raise ValueError(f"Topic {topic} already has a callback registered")
 
-        self._cmd_callbacks[topic] = fcn
+        self._topic_callbacks[topic] = fcn
 
     def remove_callback(self, topic: str) -> None:
         """remove topic callback"""
-        del self._cmd_callbacks[topic]
+        del self._topic_callbacks[topic]
 
     def _execute_command(self, message: str) -> Any:
         """execute command from message, message is a string for a simple command or
@@ -76,17 +76,17 @@ class Bridge(ABC):
 
         try:
             # check if command is registered
-            if cmd not in self._cmd_callbacks:
+            if cmd not in self._topic_callbacks:
                 raise CommandNotRegisteredError(
                     f"command {cmd} is not registered, cannot execute"
                 )
 
             if args is not None:
                 self._log.info("%s", f"Running {cmd=} {args=}")
-                ret = self._cmd_callbacks[cmd](args)
+                ret = self._topic_callbacks[cmd](args)
             else:
                 self._log.info("%s", f"Running {cmd=}")
-                ret = self._cmd_callbacks[cmd]()
+                ret = self._topic_callbacks[cmd]()
 
         except CommandNotRegisteredError as e:
             self._log.warning("%s", e)
