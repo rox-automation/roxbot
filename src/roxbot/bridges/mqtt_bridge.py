@@ -9,13 +9,12 @@ Copyright (c) 2024 ROX Automation - Jev Kuznetsov
 
 import asyncio
 import logging
-
+from typing import Dict, Callable
 import orjson
 import aiomqtt as mqtt
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-from roxbot.interfaces import MqttMessageProtocol, MqttMessage
-from .base import Bridge, JsonSerializableType
+from roxbot.interfaces import MqttMessageProtocol, MqttMessage, JsonSerializableType
 
 
 class MqttConfig(BaseSettings):
@@ -27,11 +26,12 @@ class MqttConfig(BaseSettings):
     port: int = 1883
 
 
-class MqttBridge(Bridge):
+class MqttBridge:
     """MQTT bridge for communication between subsystems"""
 
     def __init__(self, config: MqttConfig | None = None) -> None:
-        super().__init__(name="MqttBridge")
+        self._log = logging.getLogger(self.__class__.__name__)
+        self._topic_callbacks: Dict[str, Callable] = {}  # topic callbacks
 
         self.config = config or MqttConfig()
 
@@ -61,17 +61,29 @@ class MqttBridge(Bridge):
         self._log.debug("Starting mqtt receive loop")
         async for message in client.messages:
             try:
-                cmd = message.payload.decode()  # type: ignore
-                self._log.debug(f"{cmd=}")
-                self._execute_command(cmd)
+                self._log.debug(f"{message.topic=}, {message.payload=}")
 
             except orjson.JSONDecodeError as e:
                 self._log.error(f"Error decoding message {message.payload!r}: {e}")
 
-    def send(self, topic: str, data: JsonSerializableType) -> None:
+    async def register_callback(self, topic: str, fcn: Callable) -> None:
+        """add callback to topic."""
+        if topic in self._topic_callbacks:
+            raise ValueError(f"Topic {topic} already has a callback registered")
+
+        await self.subscribe(topic)
+
+        self._topic_callbacks[topic] = fcn
+
+    async def remove_callback(self, topic: str) -> None:
+        """remove topic callback"""
+        del self._topic_callbacks[topic]
+        await self.unsubscribe(topic)
+
+    async def send(self, topic: str, data: JsonSerializableType) -> None:
         """send data to topic"""
 
-        self._mqtt_queue.put_nowait(MqttMessage(topic, data))
+        await self._mqtt_queue.put(MqttMessage(topic, data))
 
     async def subscribe(self, topic: str) -> None:
         """subscribe to topic"""

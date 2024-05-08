@@ -50,11 +50,17 @@ class MachineProtocol(Protocol):
 class BridgeProtocol(Protocol):
     """interface for communication bridge"""
 
-    def send(self, topic: str, msg: JsonSerializableType) -> None:
+    async def send(self, topic: str, msg: JsonSerializableType) -> None:
         """send a message to a topic"""
 
-    def register_callback(self, topic: str, callback: Callable) -> None:
-        """register a callback for a topic"""
+    async def register_callback(self, topic: str, callback: Callable) -> None:
+        """register a callback for a topic, subscribe to topic if required"""
+
+    async def remove_callback(self, topic: str) -> None:
+        """remove callback for a topic and unsubscribe if required"""
+
+    async def main(self) -> None:
+        """main loop for the bridge"""
 
 
 class MqttMessageProtocol(Protocol):
