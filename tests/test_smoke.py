@@ -10,6 +10,13 @@ async def dummy_coro() -> None:
     pass
 
 
+def test_interfaces() -> None:
+    from roxbot import interfaces
+
+    interfaces.Pose()
+    interfaces.MqttMessage("topic", "message")
+
+
 def test_runners() -> None:
     from roxbot.utils import run_main_async
 
@@ -25,4 +32,4 @@ def test_mocks() -> None:
 def test_bridges() -> None:
     from roxbot.bridges.mqtt_bridge import MqttBridge
 
-    MqttBridge("localhost", 1883)
+    MqttBridge()
