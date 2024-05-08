@@ -14,3 +14,9 @@ def test_runners() -> None:
     from roxbot.utils import run_main_async
 
     run_main_async(dummy_coro())
+
+
+def test_mocks() -> None:
+    from roxbot.utils import mock_robot
+
+    mock_robot.MockRobot()
