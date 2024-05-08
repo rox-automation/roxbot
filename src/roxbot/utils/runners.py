@@ -21,12 +21,6 @@ def run_main_async(coro: Coroutine[Any, Any, None]) -> None:
     coloredlogs.install(level=loglevel, fmt=LOG_FORMAT)
     logging.info(f"Log level set to {loglevel}")
 
-    # silence some loggers
-    if loglevel == "DEBUG":
-        for name in ["GpsNode", "Mock_GPS", "websockets.server"]:
-            logging.warning(f"Forcing {name} log level to INFO")
-            logging.getLogger(name).setLevel(logging.INFO)
-
     try:
         asyncio.run(coro)
     except KeyboardInterrupt:
