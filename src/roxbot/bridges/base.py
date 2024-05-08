@@ -48,9 +48,8 @@ class Bridge(ABC):
 
     def register_callback(self, topic: str, fcn: Callable) -> None:
         """add callback to topic."""
-        assert (
-            topic not in self._cmd_callbacks
-        ), f"topic {topic} already has a callback registered"
+        if topic in self._cmd_callbacks:
+            raise ValueError(f"Topic {topic} already has a callback registered")
 
         self._cmd_callbacks[topic] = fcn
 
@@ -93,5 +92,5 @@ class Bridge(ABC):
         return ret
 
     @abstractmethod
-    async def serve(self) -> None:
-        """start serving, implement required tasks here"""
+    async def main(self) -> None:
+        """main coroutine"""

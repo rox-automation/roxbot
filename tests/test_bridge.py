@@ -16,7 +16,7 @@ class DummyBridge(Bridge):
     def send(self, topic: str, data):
         pass
 
-    async def serve(self):
+    async def main(self):
         pass
 
 
