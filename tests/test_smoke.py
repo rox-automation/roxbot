@@ -20,3 +20,9 @@ def test_mocks() -> None:
     from roxbot.utils import mock_robot
 
     mock_robot.MockRobot()
+
+
+def test_bridges() -> None:
+    from roxbot.bridges.mqtt_bridge import MqttBridge
+
+    MqttBridge("localhost", 1883)

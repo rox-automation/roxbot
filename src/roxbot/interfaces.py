@@ -1,7 +1,10 @@
 """Common interface definitions"""
 
-from typing import NamedTuple, Protocol
+from typing import NamedTuple, Protocol, TypeAlias, Dict, Any, List, Callable
 from .vectors import Vector
+
+
+JsonSerializableType: TypeAlias = Dict[str, Any] | List[Any] | str | int | float | bool
 
 
 class Pose(NamedTuple):
@@ -37,3 +40,13 @@ class MachineProtocol(Protocol):
             v_linear (float): driving velocity
             curvature (float): driving curvature (1/radius)
         """
+
+
+class BridgeProtocol(Protocol):
+    """interface for communication bridge"""
+
+    def send(self, topic: str, msg: JsonSerializableType) -> None:
+        """send a message to a topic"""
+
+    def register_callback(self, topic: str, callback: Callable) -> None:
+        """register a callback for a topic"""

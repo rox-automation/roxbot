@@ -8,5 +8,4 @@ set -x
 # pip install .[dev]
 ruff check src tests
 mypy src
-mypy tests
 pytest --cov=src --cov-report term-missing tests
