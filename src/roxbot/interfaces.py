@@ -1,10 +1,13 @@
 """Common interface definitions"""
 
-from typing import NamedTuple, Protocol, TypeAlias, Dict, Any, List, Callable
+from collections import namedtuple
+from typing import Any, Callable, Dict, List, NamedTuple, Protocol, TypeAlias
+
 from .vectors import Vector
 
-
 JsonSerializableType: TypeAlias = Dict[str, Any] | List[Any] | str | int | float | bool
+
+# -----------------data types-----------------
 
 
 class Pose(NamedTuple):
@@ -18,6 +21,8 @@ class Pose(NamedTuple):
     def xy(self) -> Vector:
         return Vector(self.x, self.y)
 
+
+MqttMessage = namedtuple("MqttMessage", ["topic", "message"])
 
 # ----------------porotols-----------------
 
@@ -50,3 +55,15 @@ class BridgeProtocol(Protocol):
 
     def register_callback(self, topic: str, callback: Callable) -> None:
         """register a callback for a topic"""
+
+
+class MqttMessageProtocol(Protocol):
+    """used for mqtt sender queue"""
+
+    @property
+    def topic(self) -> str:
+        """mqtt topic"""
+
+    @property
+    def message(self) -> str:
+        """mqtt message"""
