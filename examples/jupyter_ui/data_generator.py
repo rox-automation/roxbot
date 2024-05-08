@@ -63,7 +63,8 @@ class MockRobot:
                     "theta": round(self.theta, 3),
                 }
                 msg = json.dumps(data)
-                await asyncio.gather(*(client.send(msg) for client in self.clients))
+
+                websockets.broadcast(self.clients, msg)
                 log.info(f"Sending data: {msg}")
             await asyncio.sleep(1.0 / UPDATE_RATE)
 
