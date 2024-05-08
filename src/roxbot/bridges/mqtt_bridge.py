@@ -5,21 +5,19 @@ MQTT bridge for communication between subsystems
 Copyright (c) 2024 ROX Automation - Jev Kuznetsov
 """
 
-from typing import Callable
-from roxbot.interfaces import JsonSerializableType
+from .base import Bridge, JsonSerializableType
 
 
-class MqttBridge:
+class MqttBridge(Bridge):
     """MQTT bridge for communication between subsystems"""
 
     def __init__(self, host: str, port: int) -> None:
+        super().__init__(name="MqttBridge")
         self.host = host
         self.port = port
 
-    def send(self, topic: str, msg: JsonSerializableType) -> None:
-        """send a message to a topic"""
+    def send(self, topic: str, data: JsonSerializableType) -> None:
         pass
 
-    def register_callback(self, topic: str, callback: Callable) -> None:
-        """register a callback for a topic"""
+    async def serve(self) -> None:
         pass
