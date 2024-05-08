@@ -214,4 +214,4 @@ speaks for itself.
 
 
 !!! question "Interested?"
-    Are you passionate about robotics and Python, dreaming of a "Pythonic ROS"? You're not alone! I'm on a quest to develop Roxbot, and I'd love to collaborate with like-minded developers. 
+    Are you passionate about robotics and Python, dreaming of a "Pythonic ROS"? You're not alone! I'm on a quest to develop Roxbot, and I'd love to collaborate with like-minded developers.
