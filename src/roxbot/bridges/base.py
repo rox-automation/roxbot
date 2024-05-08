@@ -67,8 +67,12 @@ class Bridge(ABC):
         try:
             cmd, args = json.loads(message)
         except json.JSONDecodeError:  # if not json, assume simple command
+            self._log.warning(
+                "Message is not json, assuming simple command. Simple commands are deprecated. Use json format."
+            )
             cmd = message
             args = None
+        self._log.debug(f"{cmd=}, {args=}")
 
         try:
             # check if command is registered

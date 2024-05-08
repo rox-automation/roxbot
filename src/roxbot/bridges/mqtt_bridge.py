@@ -59,8 +59,13 @@ class MqttBridge(Bridge):
 
         self._log.debug("Starting mqtt receive loop")
         async for message in client.messages:
-            data = orjson.loads(message.payload)  # type: ignore
-            self._log.debug(f"received {data=}")
+            try:
+                cmd = message.payload.decode()  # type: ignore
+                self._log.debug(f"{cmd=}")
+                self._execute_command(cmd)
+
+            except orjson.JSONDecodeError as e:
+                self._log.error(f"Error decoding message {message.payload!r}: {e}")
 
     def send(self, topic: str, data: JsonSerializableType) -> None:
         """send data to topic"""
@@ -72,6 +77,7 @@ class MqttBridge(Bridge):
         if self._client is None:
             raise RuntimeError("MQTT client not initialized")
 
+        self._log.info(f"Subscribing to {topic}")
         await self._client.subscribe(topic)
 
     async def unsubscribe(self, topic: str) -> None:
@@ -79,6 +85,7 @@ class MqttBridge(Bridge):
         if self._client is None:
             raise RuntimeError("MQTT client not initialized")
 
+        self._log.info(f"Unsubscribing from {topic}")
         await self._client.unsubscribe(topic)
 
     async def main(self) -> None:
