@@ -2,6 +2,7 @@
   "initializeCommand": "mkdir -p /var/tmp/container-extensions", // executed on HOST system
   "postCreateCommand": "./init_container.sh",
   "image": "roxauto/roxbot:latest",
+  "runArgs": ["--network=host"],
 
   "mounts": [
     "source=/var/tmp/container-extensions,target=/home/dev/.vscode-server/extensions,type=bind,consistency=cached"
