@@ -41,3 +41,10 @@ ROXBOT takes familiar ideas from ROS2 and makes them easier to use and more Pyth
 - **Subsystems**: This term refers to a group of Nodes that work together to perform a broader function like motion control or data logging. These subsystems can be packaged into Docker containers for easy deployment and scaling.
 
 - **System**: This is the complete set of subsystems working together as a whole, forming a fully functional robotic system. We manage these as a Docker stack to ensure they are robust and scalable.
+
+
+## Classes overview
+
+run `invoke uml` to update.
+
+![](docs/uml/classes.png)

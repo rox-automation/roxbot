@@ -70,3 +70,12 @@ def ci(ctx):
     except:  # noqa
         print("Could not run docker build, just rinning ci script...")
         ctx.run("./ci_script.sh")
+
+
+@task
+def uml(ctx):
+    """
+    Generate UML diagrams from the source code using pyreverse.
+    """
+    ctx.run("mkdir -p docs/uml")
+    ctx.run("pyreverse src/roxbot -o png -d docs/uml")
