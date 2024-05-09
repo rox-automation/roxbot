@@ -3,7 +3,8 @@ name: Deploy mkdocs
 on:
   push:
     branches:
-      - main # Trigger the workflow on push to main branch
+      - main
+      - mkdocs-automation
     paths:
       - "docs/**"
       - "mkdocs.yml"
@@ -30,5 +31,7 @@ jobs:
           path: .cache
           restore-keys: |
             mkdocs-material-
-      - run: pip install mkdocs-material
+      - run: |
+          pip install install -r .github/workflows/requirements-docs.txt
+          pip install .
       - run: mkdocs gh-deploy --force
