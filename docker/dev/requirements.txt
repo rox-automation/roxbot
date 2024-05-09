@@ -19,6 +19,7 @@ mkdocstrings-python
 mypy
 numpy
 orjson
+pandas
 pre-commit
 pydantic
 pylint
