@@ -37,7 +37,7 @@ graph TD
 
 *see also:*  [code reference](../reference/bridges.md)
 
-Example usage:
+Example usage (see `examples/bridges` folder)
 
 ```python
 --8<-- "examples/bridges/mqtt_bridge_example.py"
