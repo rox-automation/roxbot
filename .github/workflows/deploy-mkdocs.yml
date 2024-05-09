@@ -27,10 +27,13 @@ jobs:
       - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV
       - uses: actions/cache@v4
         with:
-          key: mkdocs-material-${{ env.cache_id }}
-          path: .cache
+          path: |
+            ~/.cache/pip
+            ~/.cache/pypoetry
+            ~/venv
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements-docs.txt') }}
           restore-keys: |
-            mkdocs-material-
+            ${{ runner.os }}-pip-
       - run: |
           pip install install -r .github/workflows/requirements-docs.txt
           pip install .
