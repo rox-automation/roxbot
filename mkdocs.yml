@@ -27,6 +27,16 @@ theme:
 plugins:
   - blog
   - search
+  - glightbox
+  - mkdocstrings:
+      handlers:
+        python:
+          rendering:
+            show_signature_annotations: true
+            show_source: true
+            show_submodules: true
+            heading_level: 2
+
 
 markdown_extensions:
   - pymdownx.snippets

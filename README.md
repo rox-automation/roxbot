@@ -45,6 +45,6 @@ ROXBOT takes familiar ideas from ROS2 and makes them easier to use and more Pyth
 
 ## Classes overview
 
-run `invoke uml` to update.
+images are found in `docs/uml`
 
-![](docs/uml/classes.png)
+run `invoke uml` to update.
