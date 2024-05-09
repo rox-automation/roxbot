@@ -13,6 +13,7 @@ see [roadmap discussion](https://github.com/rox-automation/roxbot/discussions/2)
 
 ## Quick start
 
+* [documentation](https://rox-automation.github.io/roxbot)
 * [read the blog](https://rox-automation.github.io/roxbot/blog)
 * [join discussion](https://github.com/rox-automation/roxbot/discussions)
 * [join the project!](https://rox-automation.github.io/roxbot/contributing)
