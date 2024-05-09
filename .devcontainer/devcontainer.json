@@ -21,7 +21,8 @@
         "doi.fileheadercomment",
         "donjayamanne.githistory",
         "charliermarsh.ruff",
-        "ms-python.mypy-type-checker"
+        "ms-python.mypy-type-checker",
+        "ms-toolsai.jupyter"
       ]
     }
   }
