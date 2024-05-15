@@ -31,11 +31,10 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install .
+        run: pip install .[dev]
 
       - name: Run linting and type checks
         run: |
-          pip install ruff mypy
           ruff check src tests
           mypy src
 
