@@ -30,8 +30,8 @@ jobs:
 
       - name: Run linting and type checks
         run: |
-          pip install pylint mypy
-          pylint -E src
+          pip install ruff mypy
+          ruff check src tests
           mypy src
 
       - name: Run tests
