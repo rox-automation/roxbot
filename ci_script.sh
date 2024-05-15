@@ -3,8 +3,11 @@
 # main CI script. Run in a docker container, locally or in github actions
 # assuming all dependencies are installed
 
-set -x
+set -e
 
+python --version
+
+pip install .
 # pip install .[dev]
 ruff check src tests
 mypy src

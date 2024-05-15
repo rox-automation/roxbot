@@ -1,7 +1,7 @@
 # container for running ci locally. pre-installs dependencies, copies the source code and runs the tests
 # build this file from the root of the project.
 
-FROM python:3-slim
+FROM python:3.11-slim
 
 
 # install requirements

@@ -62,14 +62,10 @@ def build(ctx):
 def ci(ctx):
     """
     Build and run a Docker container locally to simulate the Continuous Integration process.
-    inside container the ci script will be run directly
+
     """
-    try:
-        ctx.run(f"docker build -t {CI_IMG} -f docker/ci/Dockerfile .")
-        ctx.run(f"docker run {CI_IMG}")
-    except:  # noqa
-        print("Could not run docker build, just rinning ci script...")
-        ctx.run("./ci_script.sh")
+    ctx.run(f"docker build -t {CI_IMG} -f docker/ci/Dockerfile .")
+    ctx.run(f"docker run {CI_IMG}")
 
 
 @task
