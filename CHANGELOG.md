@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 
-## v3.0.0
+## v2.2.0
 
 * add `examples/node.py` - classless node implementation
 * add `adapters.mqtt_logger.MqttLogger` that forwards python logging to a mqtt topic
