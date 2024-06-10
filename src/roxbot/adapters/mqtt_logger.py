@@ -12,16 +12,14 @@ import aiomqtt as mqtt
 from logging import LogRecord, Formatter
 from logging.handlers import QueueHandler
 
+from roxbot.config import MqttConfig
+
 
 class MqttLogger:
     """MQTT bridge for communication between subsystems"""
 
-    def __init__(
-        self, broker: str = "localhost", port: int = 1883, log_topic: str = "/log"
-    ) -> None:
-        self._broker = broker
-        self._port = port
-        self._log_topic = log_topic
+    def __init__(self, config: MqttConfig | None = None) -> None:
+        self.config = config or MqttConfig()
         self._mqtt_queue: asyncio.Queue[LogRecord] = asyncio.Queue(10)
 
     def get_log_handler(self) -> QueueHandler:
@@ -37,13 +35,13 @@ class MqttLogger:
             datefmt="%H:%M:%S",
         )
 
-        async with mqtt.Client(self._broker, port=self._port) as client:
+        async with mqtt.Client(self.config.host, port=self.config.port) as client:
             while True:
                 log_record = await self._mqtt_queue.get()
                 log_msg = formatter.format(log_record)
 
                 # publish message
-                await client.publish(self._log_topic, log_msg.encode())
+                await client.publish(self.config.log_topic, log_msg.encode())
                 self._mqtt_queue.task_done()
 
     async def main(self) -> None:
