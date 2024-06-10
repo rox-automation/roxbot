@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 
+* `Node` class - WIP on `node-class` branch
+* rename `bridges` to `adapters`. Also rename `MqttBridge` to `MqttAdapter`. This is to avoid confusion with
+stand-alone [mqtt-bridge](https://gitlab.com/roxautomation/components/mqtt-bridge)
+
 ## v2.1.0
     * move vectors to `rox-vectors` package.
 

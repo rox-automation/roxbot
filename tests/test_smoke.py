@@ -30,6 +30,6 @@ def test_mocks() -> None:
 
 
 def test_bridges() -> None:
-    from roxbot.bridges.mqtt_bridge import MqttBridge
+    from roxbot.adapters.mqtt_adapter import MqttAdapter
 
-    MqttBridge()
+    MqttAdapter()

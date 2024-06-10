@@ -26,7 +26,7 @@ class MqttConfig(BaseSettings):
     port: int = 1883
 
 
-class MqttBridge:
+class MqttAdapter:
     """MQTT bridge for communication between subsystems"""
 
     def __init__(self, config: MqttConfig | None = None) -> None:

@@ -9,7 +9,7 @@ Copyright (c) 2024 ROX Automation - Jev Kuznetsov
 from unittest.mock import AsyncMock, Mock
 
 import pytest
-from roxbot.bridges.mqtt_bridge import MqttBridge, MqttConfig, MqttMessage
+from roxbot.adapters.mqtt_adapter import MqttAdapter, MqttConfig, MqttMessage
 
 
 async def dummy_coro(*args, **kwargs) -> None:  # type: ignore
@@ -17,9 +17,9 @@ async def dummy_coro(*args, **kwargs) -> None:  # type: ignore
 
 
 @pytest.fixture
-def mqtt_bridge() -> MqttBridge:
+def mqtt_bridge() -> MqttAdapter:
     """Fixture to provide an MQTT bridge with a mocked client and ready state."""
-    bridge = MqttBridge(MqttConfig(host="localhost", port=1883))
+    bridge = MqttAdapter(MqttConfig(host="localhost", port=1883))
     bridge._client = Mock()
     bridge._client.subscribe = AsyncMock()
     bridge._client.unsubscribe = AsyncMock()
@@ -28,7 +28,7 @@ def mqtt_bridge() -> MqttBridge:
 
 
 @pytest.mark.asyncio
-async def test_subscribe(mqtt_bridge: MqttBridge) -> None:
+async def test_subscribe(mqtt_bridge: MqttAdapter) -> None:
     """Test that the bridge subscribes to a topic."""
     await mqtt_bridge.register_callback("/test", Mock())
     mqtt_bridge._client.subscribe.assert_called_once_with("/test")
@@ -39,7 +39,7 @@ async def test_subscribe(mqtt_bridge: MqttBridge) -> None:
 
 
 @pytest.mark.asyncio
-async def test_remove_callback(mqtt_bridge: MqttBridge) -> None:
+async def test_remove_callback(mqtt_bridge: MqttAdapter) -> None:
     """Test removing a callback from a topic."""
     callback = Mock()
     topic = "/remove"
@@ -54,14 +54,14 @@ async def test_remove_callback(mqtt_bridge: MqttBridge) -> None:
 
 
 @pytest.mark.asyncio
-async def test_remove_callback_not_exist(mqtt_bridge: MqttBridge) -> None:
+async def test_remove_callback_not_exist(mqtt_bridge: MqttAdapter) -> None:
     """Test removing a callback that does not exist."""
     with pytest.raises(KeyError):
         await mqtt_bridge.remove_callback("/nonexistent")
 
 
 @pytest.mark.asyncio
-async def test_send(mqtt_bridge: MqttBridge) -> None:
+async def test_send(mqtt_bridge: MqttAdapter) -> None:
     """Test sending data to a topic."""
     topic = "/send"
     data = {"key": "value"}
@@ -77,7 +77,7 @@ async def test_send(mqtt_bridge: MqttBridge) -> None:
 
 
 @pytest.mark.asyncio
-async def test_unsubscribe(mqtt_bridge: MqttBridge) -> None:
+async def test_unsubscribe(mqtt_bridge: MqttAdapter) -> None:
     """Test unsubscribing from a topic."""
     topic = "/unsubscribe"
 

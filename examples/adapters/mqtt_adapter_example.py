@@ -16,7 +16,7 @@ import asyncio
 import logging
 from typing import Any
 
-from roxbot.bridges.mqtt_bridge import MqttBridge
+from roxbot.adapters.mqtt_adapter import MqttAdapter
 from roxbot.interfaces import BridgeProtocol
 from roxbot.utils import run_main_async
 
@@ -46,7 +46,7 @@ async def send_messages(bridge: BridgeProtocol) -> None:
 
 
 async def main() -> None:
-    bridge: BridgeProtocol = MqttBridge()
+    bridge: BridgeProtocol = MqttAdapter()
     async with asyncio.TaskGroup() as tg:
         tg.create_task(bridge.main())
 
