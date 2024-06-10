@@ -23,7 +23,7 @@ class Pose(NamedTuple):
 
 class MqttMessage(NamedTuple):
     topic: str
-    message: str
+    message: str | bytes
 
 
 # ----------------porotols-----------------
@@ -63,15 +63,3 @@ class BridgeProtocol(Protocol):
 
     async def main(self) -> None:
         """main loop for the bridge"""
-
-
-class MqttMessageProtocol(Protocol):
-    """used for mqtt sender queue"""
-
-    @property
-    def topic(self) -> str:
-        """mqtt topic"""
-
-    @property
-    def message(self) -> str:
-        """mqtt message"""
