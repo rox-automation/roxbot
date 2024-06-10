@@ -16,10 +16,10 @@ async def main() -> None:
     log = logging.getLogger("main")
     log.setLevel(logging.DEBUG)
 
-    log_forwarder = MqttLogger()
+    log_forwarder = MqttLogger(logger=log)
 
     # add the mqtt log handler
-    log.addHandler(log_forwarder.get_log_handler())
+    # log.addHandler(log_forwarder.get_log_handler())
 
     # log some messages
     log.debug("debug message")

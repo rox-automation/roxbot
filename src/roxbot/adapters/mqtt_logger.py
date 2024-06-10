@@ -9,7 +9,7 @@ Copyright (c) 2024 ROX Automation - Jev Kuznetsov
 import asyncio
 import aiomqtt as mqtt
 
-from logging import LogRecord, Formatter
+from logging import LogRecord, Formatter, Logger
 from logging.handlers import QueueHandler
 
 from roxbot.config import MqttConfig
@@ -18,14 +18,29 @@ from roxbot.config import MqttConfig
 class MqttLogger:
     """MQTT bridge for communication between subsystems"""
 
-    def __init__(self, config: MqttConfig | None = None) -> None:
+    def __init__(
+        self, logger: Logger | None = None, config: MqttConfig | None = None
+    ) -> None:
+        """create mqtt logger
+
+        Args:
+            config (MqttConfig | None, optional): mqtt configuration. Defaults to None.
+            logger (Logger | None, optional): logging.logger instance to attach handler. Defaults to None.
+        """
         self.config = config or MqttConfig()
         self._mqtt_queue: asyncio.Queue[LogRecord] = asyncio.Queue(10)
+
+        if logger is not None:
+            self.add_handler(logger)
 
     def get_log_handler(self) -> QueueHandler:
         """return a logging handler that logs to mqtt"""
         handler = QueueHandler(self._mqtt_queue)
         return handler
+
+    def add_handler(self, logger: Logger) -> None:
+        """add mqtt handler to logger"""
+        logger.addHandler(self.get_log_handler())
 
     async def _publish_mqtt(self) -> None:
         """publish items from mqtt queue."""
