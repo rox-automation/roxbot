@@ -9,6 +9,7 @@ Copyright (c) 2024 ROX Automation - Jev Kuznetsov
 from unittest.mock import AsyncMock, Mock
 
 import pytest
+import orjson
 from roxbot.adapters.mqtt_adapter import MqttAdapter, MqttConfig, MqttMessage
 
 
@@ -73,7 +74,9 @@ async def test_send(mqtt_bridge: MqttAdapter) -> None:
     await mqtt_bridge.send(topic, data)
 
     # Check if the put method was called correctly
-    mqtt_bridge._mqtt_queue.put.assert_awaited_once_with(MqttMessage(topic, data))
+    mqtt_bridge._mqtt_queue.put.assert_awaited_once_with(
+        MqttMessage(topic, orjson.dumps(data))
+    )
 
 
 @pytest.mark.asyncio

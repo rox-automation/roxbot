@@ -14,7 +14,7 @@ import orjson
 import aiomqtt as mqtt
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-from roxbot.interfaces import MqttMessageProtocol, MqttMessage, JsonSerializableType
+from roxbot.interfaces import MqttMessage, JsonSerializableType
 
 
 class MqttConfig(BaseSettings):
@@ -38,8 +38,7 @@ class MqttAdapter:
         self._client: mqtt.Client | None = None
         self._client_ready = asyncio.Event()
 
-        self._log = logging.getLogger(self.__class__.__name__)
-        self._mqtt_queue: asyncio.Queue[MqttMessageProtocol] = asyncio.Queue(10)
+        self._mqtt_queue: asyncio.Queue[MqttMessage] = asyncio.Queue(10)
 
     async def _publish_mqtt(self, client: mqtt.Client) -> None:
         """publish items from mqtt queue.
@@ -83,7 +82,7 @@ class MqttAdapter:
     async def send(self, topic: str, data: JsonSerializableType) -> None:
         """send data to topic"""
 
-        await self._mqtt_queue.put(MqttMessage(topic, data))
+        await self._mqtt_queue.put(MqttMessage(topic, orjson.dumps(data)))
 
     async def subscribe(self, topic: str) -> None:
         """subscribe to topic"""
