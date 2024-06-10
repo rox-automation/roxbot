@@ -15,3 +15,4 @@ class MqttConfig(BaseSettings):
 
     host: str = "localhost"
     port: int = 1883
+    log_topic: str = "/log"

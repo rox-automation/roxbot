@@ -52,9 +52,20 @@ class MqttAdapter:
         async for message in client.messages:
             try:
                 self._log.debug(f"{message.topic=}, {message.payload=}")
+                if not isinstance(message.payload, (str, bytes, bytearray)):
+                    raise TypeError(f"Unexpected payload type {type(message.payload)}")
 
-            except orjson.JSONDecodeError as e:
+                topic = message.topic.value
+
+                data = orjson.loads(message.payload)
+                if topic in self._topic_callbacks:
+                    self._topic_callbacks[topic](data)
+
+            except (TypeError, orjson.JSONDecodeError) as e:
                 self._log.error(f"Error decoding message {message.payload!r}: {e}")
+
+            except Exception as e:
+                self._log.exception(e, exc_info=True)
 
     async def register_callback(self, topic: str, fcn: Callable) -> None:
         """add callback to topic."""
