@@ -23,6 +23,11 @@ log = logging.getLogger("main")
 log.setLevel(logging.DEBUG)
 
 
+def listener(args: list | dict) -> None:
+    """example callback function"""
+    log.info(f"Running callback with {args=}")
+
+
 async def talker() -> None:
     counter = 0
 
@@ -35,10 +40,13 @@ async def talker() -> None:
 
 async def main() -> None:
     mqtt_adapter = MqttAdapter()
+
     mqtt_logger = MqttLogger(log)
 
     async with asyncio.TaskGroup() as tg:
         tg.create_task(mqtt_adapter.main())
+        await mqtt_adapter.register_callback("/test_cmd", listener)
+
         tg.create_task(mqtt_logger.main())
         tg.create_task(talker())
 
