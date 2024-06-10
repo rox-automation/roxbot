@@ -1,6 +1,5 @@
 """Common interface definitions"""
 
-from collections import namedtuple
 from typing import Any, Callable, Dict, List, NamedTuple, Protocol, TypeAlias
 
 from .vectors import Vector
@@ -22,7 +21,10 @@ class Pose(NamedTuple):
         return Vector(self.x, self.y)
 
 
-MqttMessage = namedtuple("MqttMessage", ["topic", "message"])
+class MqttMessage(NamedTuple):
+    topic: str
+    message: str | bytes
+
 
 # ----------------porotols-----------------
 
@@ -61,15 +63,3 @@ class BridgeProtocol(Protocol):
 
     async def main(self) -> None:
         """main loop for the bridge"""
-
-
-class MqttMessageProtocol(Protocol):
-    """used for mqtt sender queue"""
-
-    @property
-    def topic(self) -> str:
-        """mqtt topic"""
-
-    @property
-    def message(self) -> str:
-        """mqtt message"""

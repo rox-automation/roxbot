@@ -12,21 +12,12 @@ import logging
 from typing import Dict, Callable
 import orjson
 import aiomqtt as mqtt
-from pydantic_settings import BaseSettings, SettingsConfigDict
 
-from roxbot.interfaces import MqttMessageProtocol, MqttMessage, JsonSerializableType
-
-
-class MqttConfig(BaseSettings):
-    """MQTT related settings"""
-
-    model_config = SettingsConfigDict(env_prefix="mqtt_")
-
-    host: str = "localhost"
-    port: int = 1883
+from roxbot.config import MqttConfig
+from roxbot.interfaces import MqttMessage, JsonSerializableType
 
 
-class MqttBridge:
+class MqttAdapter:
     """MQTT bridge for communication between subsystems"""
 
     def __init__(self, config: MqttConfig | None = None) -> None:
@@ -38,8 +29,7 @@ class MqttBridge:
         self._client: mqtt.Client | None = None
         self._client_ready = asyncio.Event()
 
-        self._log = logging.getLogger(self.__class__.__name__)
-        self._mqtt_queue: asyncio.Queue[MqttMessageProtocol] = asyncio.Queue(10)
+        self._mqtt_queue: asyncio.Queue[MqttMessage] = asyncio.Queue(10)
 
     async def _publish_mqtt(self, client: mqtt.Client) -> None:
         """publish items from mqtt queue.
@@ -62,9 +52,20 @@ class MqttBridge:
         async for message in client.messages:
             try:
                 self._log.debug(f"{message.topic=}, {message.payload=}")
+                if not isinstance(message.payload, (str, bytes, bytearray)):
+                    raise TypeError(f"Unexpected payload type {type(message.payload)}")
 
-            except orjson.JSONDecodeError as e:
+                topic = message.topic.value
+
+                data = orjson.loads(message.payload)
+                if topic in self._topic_callbacks:
+                    self._topic_callbacks[topic](data)
+
+            except (TypeError, orjson.JSONDecodeError) as e:
                 self._log.error(f"Error decoding message {message.payload!r}: {e}")
+
+            except Exception as e:
+                self._log.exception(e, exc_info=True)
 
     async def register_callback(self, topic: str, fcn: Callable) -> None:
         """add callback to topic."""
@@ -83,7 +84,7 @@ class MqttBridge:
     async def send(self, topic: str, data: JsonSerializableType) -> None:
         """send data to topic"""
 
-        await self._mqtt_queue.put(MqttMessage(topic, data))
+        await self._mqtt_queue.put(MqttMessage(topic, orjson.dumps(data)))
 
     async def subscribe(self, topic: str) -> None:
         """subscribe to topic"""

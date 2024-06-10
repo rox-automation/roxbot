@@ -19,5 +19,10 @@
         "company": "ROX Automation",
         "pybang": "#!/usr/bin/env python3"
       }
-    }
+    },
+    "python.testing.pytestArgs": [
+      "tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
   }
