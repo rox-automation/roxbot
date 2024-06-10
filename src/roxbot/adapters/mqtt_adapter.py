@@ -12,18 +12,9 @@ import logging
 from typing import Dict, Callable
 import orjson
 import aiomqtt as mqtt
-from pydantic_settings import BaseSettings, SettingsConfigDict
 
+from roxbot.config import MqttConfig
 from roxbot.interfaces import MqttMessage, JsonSerializableType
-
-
-class MqttConfig(BaseSettings):
-    """MQTT related settings"""
-
-    model_config = SettingsConfigDict(env_prefix="mqtt_")
-
-    host: str = "localhost"
-    port: int = 1883
 
 
 class MqttAdapter:
