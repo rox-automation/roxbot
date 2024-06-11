@@ -6,11 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Planned
 
-* gps_mock, posting simulated gps data to mqtt topic
+
 
 
 ## Unreleased
 
+
+
+## v2.4.0
+* gps_mock, posting simulated gps data to mqtt topic
 * rename `MqttAdapter.send()` to `.publish()`
 
 
