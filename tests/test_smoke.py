@@ -33,3 +33,9 @@ def test_bridges() -> None:
     from roxbot.adapters.mqtt_adapter import MqttAdapter
 
     MqttAdapter()
+
+
+def test_nodes() -> None:
+    from roxbot.nodes import gps_node
+
+    gps_node.GpsNode()

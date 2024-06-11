@@ -15,4 +15,7 @@ class MqttConfig(BaseSettings):
 
     host: str = "localhost"
     port: int = 1883
+    # topics
     log_topic: str = "/log"
+    gps_position_topic: str = "/gps/position"
+    gps_direction_topic: str = "/gps/direction"

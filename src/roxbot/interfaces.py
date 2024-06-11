@@ -26,6 +26,33 @@ class MqttMessage(NamedTuple):
     message: str | bytes
 
 
+class PositionData(NamedTuple):
+    """latitude and longitude data"""
+
+    lat: float
+    lon: float
+    x: float
+    y: float
+    gps_qual: int
+    time: str
+    ts: float  # system time (epoch)
+
+    def to_dict(self) -> dict:
+        return self._asdict()  # type: ignore # pylint: disable=no-member
+
+
+class HeadingData(NamedTuple):
+    """heading data"""
+
+    heading: float
+    heading_stdev: float
+    theta: float
+    ts: float
+
+    def to_dict(self) -> dict:
+        return self._asdict()  # type: ignore # pylint: disable=no-member
+
+
 # ----------------porotols-----------------
 
 
