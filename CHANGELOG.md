@@ -6,10 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Planned
 
-* gps node (`gps-node` branch)
+* gps_mock, posting simulated gps data to mqtt topic
 
 
 ## Unreleased
+
+## v2.3.0
+
+* add `nodes.gps_node` (receives mqqt gps messages and aggregates them)
+* add gps dataclasses in `interfaces`
 
 ## v2.2.0
 
