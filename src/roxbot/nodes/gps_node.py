@@ -22,7 +22,7 @@ class FixProblem(Enum):
 
     NONE = auto()
     INCOMPLETE_DATA = auto()
-    NO_FIX = auto()
+    NO_RTK_FIX = auto()
     OLD_FIX = auto()
 
 
@@ -38,10 +38,10 @@ class FixException(Exception):
 
 class GpsNode:
     """interface to gps mqtt data, works in meters and radians.
-    latlon conversion is done by the gps node"""
+    latlon conversion is done by the gps sender node"""
 
     def __init__(self) -> None:
-        self._log = logging.getLogger("gps")
+        self._log = logging.getLogger("gps_node")
         self.last_update = 0.0  # last update time
         self.x = 0.0  # x position in meters
         self.y = 0.0  # y position in meters
@@ -82,7 +82,7 @@ class GpsNode:
             raise FixException(FixProblem.OLD_FIX)
 
         if self.gps_qual != 4:
-            raise FixException(FixProblem.NO_FIX)
+            raise FixException(FixProblem.NO_RTK_FIX)
 
         return Pose(self.x, self.y, self.theta)
 
