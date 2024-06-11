@@ -8,6 +8,7 @@ Copyright (c) 2024 ROX Automation - Jev Kuznetsov
 """
 
 import asyncio
+import warnings
 import logging
 from typing import Dict, Callable
 import orjson
@@ -82,8 +83,12 @@ class MqttAdapter:
         await self.unsubscribe(topic)
 
     async def send(self, topic: str, data: JsonSerializableType) -> None:
-        """send data to topic"""
+        """send data to topic, deprecated"""
+        warnings.warn("send is deprecated, use publish instead", DeprecationWarning)
+        await self.publish(topic, data)
 
+    async def publish(self, topic: str, data: JsonSerializableType) -> None:
+        """publish data to topic"""
         await self._mqtt_queue.put(MqttMessage(topic, orjson.dumps(data)))
 
     async def subscribe(self, topic: str) -> None:
