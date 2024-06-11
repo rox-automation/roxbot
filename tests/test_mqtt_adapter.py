@@ -71,7 +71,7 @@ async def test_send(mqtt_bridge: MqttAdapter) -> None:
     mqtt_bridge._mqtt_queue.put = AsyncMock()
 
     # Send the data
-    await mqtt_bridge.send(topic, data)
+    await mqtt_bridge.publish(topic, data)
 
     # Check if the put method was called correctly
     mqtt_bridge._mqtt_queue.put.assert_awaited_once_with(
