@@ -1,4 +1,4 @@
 
 ## MQTT
 
-::: roxbot.bridges.mqtt_bridge
+::: roxbot.adapters.mqtt_adapter
