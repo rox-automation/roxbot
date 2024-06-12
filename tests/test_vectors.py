@@ -2,7 +2,7 @@
 # type: ignore
 """
 
- Copyright (c) 2023 ROX Automations
+Copyright (c) 2023 ROX Automations
 """
 # type: ignore
 
@@ -11,7 +11,7 @@ import math
 import numpy as np
 import pytest
 from pytest import approx
-
+from roxbot.gps import converters
 from roxbot.vectors import Vector, Line, distance_to_b, distance_to_line, point_on_line
 
 
@@ -197,3 +197,28 @@ def test_line_shift_y_parametrized(start, end, dy, shifted_start, shifted_end):
     line.shift_y(dy)
     assert almost_equal(line.start, shifted_start)
     assert almost_equal(line.end, shifted_end)
+
+
+def test_from_latlon():
+    """test conversion from latlon to vector"""
+
+    latlon = (51.365948, 6.172037)
+
+    converters.set_gps_ref(*latlon)
+
+    v = Vector.from_latlon(latlon)
+    assert v.x == approx(0.000000)
+    assert v.y == approx(0.000000)
+
+
+def test_to_latlon():
+    """conversion from vector to latlon"""
+
+    latlon = (51.365948, 6.172037)
+    converters.set_gps_ref(*latlon)
+
+    v = Vector(0, 0)
+
+    lat, lon = v.latlon
+    assert lat == approx(latlon[0])
+    assert lon == approx(latlon[1])
