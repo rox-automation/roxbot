@@ -6,12 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Planned
 
-
+* refactor `GpsNode` to use `Node` base class.
 
 
 ## Unreleased
 
+## v2.5.0
 
+* add `Node` base class and `examples/node.py`
+* update docs (rename Bridges to Adapters)
 
 ## v2.4.0
 * gps_mock, posting simulated gps data to mqtt topic
