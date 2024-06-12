@@ -13,6 +13,7 @@ Copyright (c) 2024 ROX Automation - Jev Kuznetsov
 import asyncio
 import logging
 import time
+from typing import List, Callable
 
 from .adapters.mqtt_adapter import MqttAdapter
 from .config import MqttConfig
@@ -41,8 +42,12 @@ class Node:
         self._log = logging.getLogger(self.name)
         self.mqtt = MqttAdapter()
 
-        # list of coroutines to run in main(). Append to this list in __init__ of derived class
-        self._coros = [self.mqtt.main, self._async_init, self._heartbeat]
+        # list of coroutines to run in main(). Append to this list in __init__ of derived class. Provide as a reference to the coro, not a call.
+        self._coros: List[Callable] = [
+            self.mqtt.main,
+            self._async_init,
+            self._heartbeat,
+        ]
 
     async def _async_init(self) -> None:
         """init coroutine to run in main(), re-implement in derived class"""
