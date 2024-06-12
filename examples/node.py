@@ -1,14 +1,12 @@
 #!/usr/bin/env python3
 """
-Node example.
+Nodes example
+--------------
 
-There is no need to create a base Node class, a more flexible approach is to
-use adapters to add functionality to a class.
+This example demonstrates how to use the Node class.
 
-In this example, we don't even need to create a Node class, we can just use a couple
-of coros.
-
-When only one instance of a node is required, it is simpler to use coroutines in a module.
+* create two nodes that communicate with each other over mqtt.
+* log messages to mqtt with MqttLogger
 
 Copyright (c) 2024 ROX Automation - Jev Kuznetsov
 """
@@ -16,39 +14,65 @@ Copyright (c) 2024 ROX Automation - Jev Kuznetsov
 import asyncio
 import logging
 
-from roxbot.adapters import MqttAdapter, MqttLogger
+from roxbot import Node
+from roxbot.adapters import MqttLogger
 from roxbot.utils import run_main_async
 
-log = logging.getLogger("main")
-log.setLevel(logging.DEBUG)
+
+class NodeOne(Node):
+    def __init__(self) -> None:
+        super().__init__()
+
+        # add coroutines to run in main()
+        self._coros.append(self.talker_coro)
+
+    async def _async_init(self) -> None:
+        """init coroutine to run in main()"""
+        self._log.info("Running init coroutine")
+        await self.mqtt.register_callback("/test_cmd", self.listener_cbk)
+
+    def listener_cbk(self, args: list | dict) -> None:
+        """example callback function"""
+        self._log.info(f"Running callback with {args=}")
+
+    async def talker_coro(self) -> None:
+        """example coroutine"""
+
+        counter = 0
+
+        while True:
+            self._log.debug(f"debug message {counter=}")
+            self._log.info(f"info message {counter=}")
+            counter += 1
+            await asyncio.sleep(1)
 
 
-def listener(args: list | dict) -> None:
-    """example callback function"""
-    log.info(f"Running callback with {args=}")
+class NodeTwo(Node):
+    """second node, sends commands to the first"""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self._coros.append(self.send_command)  # don't forget this one
+
+    async def send_command(self) -> None:
+        """send command to the first node"""
+        counter = 0
+        while True:
+            await self.mqtt.publish("/test_cmd", {"counter": counter})
+            counter += 1
+            await asyncio.sleep(2)
 
 
-async def talker() -> None:
-    counter = 0
-
-    while True:
-        log.debug(f"debug message {counter=}")
-        log.info(f"info message {counter=}")
-        counter += 1
-        await asyncio.sleep(1)
+# --- main ---
 
 
 async def main() -> None:
-    mqtt_adapter = MqttAdapter()
+    mqtt_logger = MqttLogger(logging.getLogger())  # forward logs to mqtt
+    _ = asyncio.create_task(mqtt_logger.main())  # start logging task
 
-    mqtt_logger = MqttLogger(log)
+    nodes = [NodeOne(), NodeTwo()]
 
-    async with asyncio.TaskGroup() as tg:
-        tg.create_task(mqtt_adapter.main())
-        await mqtt_adapter.register_callback("/test_cmd", listener)
-
-        tg.create_task(mqtt_logger.main())
-        tg.create_task(talker())
+    await asyncio.gather(*[node.main() for node in nodes])
 
 
 if __name__ == "__main__":

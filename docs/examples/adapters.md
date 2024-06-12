@@ -1,16 +1,16 @@
-# Bridges
+# Adapters
 
 
-"Bridges" are used for connecting subsystems and as an interface to user interfaces.
+"Adapters" are used for connecting subsystems and as an interface to user interfaces.
 
-A `Bridge` is an abstraction that implements `pub/sub` paradigm. An `Bridge` interface is defined by [BridgeProtocol](../reference/interfaces.md#roxbot.interfaces.BridgeProtocol)
+A `Adapter` is an abstraction that implements `pub/sub` paradigm. An `Adapter` interface is defined by [AdapterProtocol](../reference/interfaces.md#roxbot.interfaces.AdapterProtocol)
 
 
 For example, we can split a system in two parts - *motion* and *safety*. Each subsystem can
 run stand-alone in its own docker container. `pub/sub` topics can be used to communicate between the
 containers over network.
 
-Specific backend of a `Bridge` can vary. Many "middlewares" are available, like `mqtt`, `zeromq` and others.
+Specific backend of a `Adapter` can vary. Many "middlewares" are available, like `mqtt`, `zeromq` and others.
 
 ``` mermaid
 graph TD
@@ -25,7 +25,7 @@ graph TD
         lidar_node
     end
 
-    safety_subsystem ---|bridge|motion_subsystem
+    safety_subsystem ---|Adapter|motion_subsystem
 
 
 
@@ -33,14 +33,14 @@ graph TD
 
 
 
-## MQTT Bridge
+## MQTT Adapter
 
-*see also:*  [code reference](../reference/bridges.md)
+*see also:*  [code reference](../reference/adapters.md)
 
-Example usage (see `examples/bridges` folder)
+Example usage (see `examples/Adapters` folder)
 
 ```python
---8<-- "examples/bridges/mqtt_bridge_example.py"
+--8<-- "examples/Adapters/mqtt_Adapter_example.py"
 
 ```
 
