@@ -76,10 +76,10 @@ class MachineProtocol(Protocol):
         """
 
 
-class BridgeProtocol(Protocol):
+class AdapterProtocol(Protocol):
     """interface for communication bridge"""
 
-    async def send(self, topic: str, msg: JsonSerializableType) -> None:
+    async def publish(self, topic: str, msg: JsonSerializableType) -> None:
         """send a message to a topic"""
 
     async def register_callback(self, topic: str, callback: Callable) -> None:

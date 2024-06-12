@@ -28,7 +28,7 @@ class MqttLogger:
             logger (Logger | None, optional): logging.logger instance to attach handler. Defaults to None.
         """
         self.config = config or MqttConfig()
-        self._mqtt_queue: asyncio.Queue[LogRecord] = asyncio.Queue(10)
+        self._mqtt_queue: asyncio.Queue[LogRecord] = asyncio.Queue()
 
         if logger is not None:
             self.add_handler(logger)
