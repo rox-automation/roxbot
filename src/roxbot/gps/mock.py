@@ -40,15 +40,19 @@ def timestamp() -> float:
 
 class MockGPS:
     def __init__(self) -> None:
-        self.pose = Pose(0.0, 0.0, 0.0)
-        self.fix_quality = 4
+        self.fix_quality = 4  # 4 is RTK fix, change this if needed
 
+        self._pose = Pose(0.0, 0.0, 0.0)
         self._log = logging.getLogger("mock_gps")
 
         self._mqtt_adapter = MqttAdapter()
 
-    def set_pose(self, args: dict) -> None:
-        """example callback function"""
+    def set_pose(self, x: float, y: float, theta: float) -> None:
+        """set pose"""
+        self._pose = Pose(x, y, theta)
+
+    def _pose_cmd(self, args: dict) -> None:
+        """set pose from mqtt command"""
         self._log.info(f"Setting pose to {args=}")
 
         if not isinstance(args, dict):
@@ -56,9 +60,7 @@ class MockGPS:
             return
 
         try:
-            self.pose.x = args["x"]
-            self.pose.y = args["y"]
-            self.pose.theta = args["theta"]
+            self.set_pose(args["x"], args["y"], args["theta"])
         except KeyError as e:
             self._log.error(f"Missing key {e}")
 
@@ -69,15 +71,15 @@ class MockGPS:
 
         while True:
             # position
-            lat, lon = gps_converter.enu_to_latlon((self.pose.x, self.pose.y))
+            lat, lon = gps_converter.enu_to_latlon((self._pose.x, self._pose.y))
 
             ts = timestamp()
 
             position = PositionData(
                 lat,
                 lon,
-                self.pose.x,
-                self.pose.y,
+                self._pose.x,
+                self._pose.y,
                 self.fix_quality,
                 datetime.now().strftime("%H:%M:%S"),
                 ts,
@@ -87,8 +89,8 @@ class MockGPS:
             )
 
             # heading
-            heading = converters.theta_to_heading(self.pose.theta)
-            heading_data = HeadingData(heading, 0.1, self.pose.theta, ts)
+            heading = converters.theta_to_heading(self._pose.theta)
+            heading_data = HeadingData(heading, 0.1, self._pose.theta, ts)
 
             await self._mqtt_adapter.publish(
                 MQTT_CFG.gps_direction_topic, heading_data.to_dict()
@@ -99,7 +101,7 @@ class MockGPS:
     async def main(self) -> None:
         async with asyncio.TaskGroup() as tg:
             tg.create_task(self._mqtt_adapter.main())
-            await self._mqtt_adapter.register_callback(SET_POSE_TOPIC, self.set_pose)
+            await self._mqtt_adapter.register_callback(SET_POSE_TOPIC, self._pose_cmd)
             tg.create_task(self.publish_data())
 
 
