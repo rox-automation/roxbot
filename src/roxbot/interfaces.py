@@ -1,8 +1,15 @@
 """Common interface definitions"""
 
-from typing import Any, Callable, Dict, List, NamedTuple, Protocol, TypeAlias
+from typing import Any, Callable, Dict, List, NamedTuple, Protocol, TypeAlias, Tuple
 
 from .vectors import Vector
+from .gps.converters import (
+    latlon_to_enu,
+    theta_to_heading,
+    heading_to_theta,
+    enu_to_latlon,
+)
+
 
 JsonSerializableType: TypeAlias = Dict[str, Any] | List[Any] | str | int | float | bool
 
@@ -19,6 +26,24 @@ class Pose(NamedTuple):
     @property
     def xy(self) -> Vector:
         return Vector(self.x, self.y)
+
+    @classmethod
+    def from_gps(cls, lat: float, lon: float, heading: float) -> "Pose":
+        """create pose from gps coordinates"""
+        x, y = latlon_to_enu((lat, lon))
+        theta = heading_to_theta(heading)
+
+        return cls(x, y, theta)
+
+    def to_gps(self) -> Tuple[float, float, float]:
+        """convert pose to gps coordinates"""
+        lat, lon = enu_to_latlon((self.x, self.y))
+        heading = theta_to_heading(self.theta)
+
+        return lat, lon, heading
+
+    def __str__(self) -> str:
+        return f"x={self.x:.3f}, y={self.y:.3f}, theta={self.theta:.3f}"
 
 
 class MqttMessage(NamedTuple):

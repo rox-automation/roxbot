@@ -11,6 +11,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 
+## v2.8.0
+
+* remove vectors extensions to avoid confusion
+* add gps conversion to `Pose`
+
 
 ## v2.7.0
 
