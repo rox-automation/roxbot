@@ -11,6 +11,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 
+
+## v2.7.0
+
+* Deprecate `converter.GpsConverter` in favor of direct functions. This is now more in line with v1.x
+* add latlon conversions to `Vector`
+
+
 ## v2.6.0
 * refactor gps mock, now more compatible with 1.x
 
