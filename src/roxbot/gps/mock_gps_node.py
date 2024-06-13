@@ -11,18 +11,17 @@ Copyright (c) 2024 ROX Automation - Jev Kuznetsov
 """
 
 import asyncio
-import logging
 import time
 from datetime import datetime
 from dataclasses import dataclass
 
-from roxbot.adapters import MqttAdapter
+from roxbot import Node
 from roxbot.config import MqttConfig
-from roxbot.gps import converters
+from roxbot.gps.converters import enu_to_latlon, theta_to_heading
 from roxbot.interfaces import HeadingData, PositionData
 from roxbot.utils import run_main_async
 
-SET_POSE_TOPIC = "/mock_gps/set_pose"
+SET_POSE_TOPIC = "/gps/mock_pose"
 PUBLISH_FREQ = 5  # Hz
 MQTT_CFG = MqttConfig()
 
@@ -38,14 +37,21 @@ def timestamp() -> float:
     return round(time.time(), 3)
 
 
-class MockGPS:
+class MockGPS(Node):
     def __init__(self) -> None:
+        super().__init__()
+
         self.fix_quality = 4  # 4 is RTK fix, change this if needed
-
         self._pose = Pose(0.0, 0.0, 0.0)
-        self._log = logging.getLogger("mock_gps")
 
-        self._mqtt_adapter = MqttAdapter()
+        self._log.info(f"Starting mock gps, set pose topic: {SET_POSE_TOPIC}")
+
+        self._coros += [self._on_init, self.publish_data]
+
+    async def _on_init(self) -> None:
+        """init coroutine to run in main()"""
+        self._log.info("Running init coroutine")
+        await self.mqtt.register_callback(SET_POSE_TOPIC, self._pose_cmd)
 
     def set_pose(self, x: float, y: float, theta: float) -> None:
         """set pose"""
@@ -67,11 +73,10 @@ class MockGPS:
     async def publish_data(self) -> None:
         """publish gps position and orientation"""
         delay = 1 / PUBLISH_FREQ
-        gps_converter = converters.GpsConverter()
 
         while True:
             # position
-            lat, lon = gps_converter.enu_to_latlon((self._pose.x, self._pose.y))
+            lat, lon = enu_to_latlon((self._pose.x, self._pose.y))
 
             ts = timestamp()
 
@@ -84,25 +89,17 @@ class MockGPS:
                 datetime.now().strftime("%H:%M:%S"),
                 ts,
             )
-            await self._mqtt_adapter.publish(
-                MQTT_CFG.gps_position_topic, position.to_dict()
-            )
+            await self.mqtt.publish(MQTT_CFG.gps_position_topic, position.to_dict())
 
             # heading
-            heading = converters.theta_to_heading(self._pose.theta)
+            heading = theta_to_heading(self._pose.theta)
             heading_data = HeadingData(heading, 0.1, self._pose.theta, ts)
 
-            await self._mqtt_adapter.publish(
+            await self.mqtt.publish(
                 MQTT_CFG.gps_direction_topic, heading_data.to_dict()
             )
 
             await asyncio.sleep(delay)
-
-    async def main(self) -> None:
-        async with asyncio.TaskGroup() as tg:
-            tg.create_task(self._mqtt_adapter.main())
-            await self._mqtt_adapter.register_callback(SET_POSE_TOPIC, self._pose_cmd)
-            tg.create_task(self.publish_data())
 
 
 if __name__ == "__main__":
