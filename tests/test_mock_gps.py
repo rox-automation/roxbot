@@ -1,4 +1,4 @@
-from roxbot.gps.mock import MockGPS
+from roxbot.gps.mock_gps_node import MockGPS
 
 
 def test_set_pose() -> None:

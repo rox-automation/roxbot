@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Planned
 
+* add `GpsMockNode` to generate fake gps data.
 * refactor `GpsNode` to use `Node` base class.
 
 
