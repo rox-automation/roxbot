@@ -42,7 +42,7 @@ roxbot = "roxbot.cli:cli"
 
 [project.optional-dependencies]
 dev = [
-    "ruff",
+    "pylint",
     "mypy",
     "pytest",
     "pytest-cov",
