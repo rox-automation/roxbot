@@ -9,6 +9,6 @@ python --version
 
 pip install .
 pip install .[dev]
-ruff check src tests
+pylint -E src tests
 mypy src
 pytest --cov=src --cov-report term-missing tests
