@@ -15,14 +15,15 @@
       "extensions": [
         "ms-python.python",
         "ms-python.vscode-pylance",
+        "ms-python.pylint",
+        "ms-python.black-formatter",
         "shardulm94.trailing-spaces",
         "njpwerner.autodocstring",
         "mhutchie.git-graph",
         "doi.fileheadercomment",
         "donjayamanne.githistory",
-        "charliermarsh.ruff",
-        "ms-python.mypy-type-checker",
-        "ms-toolsai.jupyter"
+        "ms-python.mypy-type-checker"
+
       ]
     }
   }
