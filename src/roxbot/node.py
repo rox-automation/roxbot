@@ -45,11 +45,11 @@ class Node:
         # list of coroutines to run in main(). Append to this list in __init__ of derived class. Provide as a reference to the coro, not a call.
         self._coros: List[Callable] = [
             self.mqtt.main,
-            self._async_init,
+            self._on_init,
             self._heartbeat,
         ]
 
-    async def _async_init(self) -> None:
+    async def _on_init(self) -> None:
         """init coroutine to run in main(), re-implement in derived class"""
         self._log.info("No specific init coroutine defined")
 

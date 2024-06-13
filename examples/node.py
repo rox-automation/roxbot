@@ -26,7 +26,7 @@ class NodeOne(Node):
         # add coroutines to run in main()
         self._coros.append(self.talker_coro)
 
-    async def _async_init(self) -> None:
+    async def _on_init(self) -> None:
         """init coroutine to run in main()"""
         self._log.info("Running init coroutine")
         await self.mqtt.register_callback("/test_cmd", self.listener_cbk)
