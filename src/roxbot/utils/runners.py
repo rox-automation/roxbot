@@ -27,10 +27,10 @@ def run_main_async(coro: Coroutine[Any, Any, None]) -> None:
         pass
     except ExceptionGroup as group:
         logging.error("ExceptionGroup caught")
-        for e in group.exceptions:
+        for e in group.exceptions:  # pylint: disable=not-an-iterable
             logging.exception(f"Caught exception: {e}", exc_info=e)
     except asyncio.CancelledError:
         logging.error("Cancelled")
 
     except Exception as e:
-        logging.error(f"Crashed with {e},  type: {type(e)}")
+        logging.error(f"Crashed with {e},  type: {type(e)}", exc_info=e)
