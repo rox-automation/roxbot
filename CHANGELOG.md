@@ -11,6 +11,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 
+## v3.0.0
+
+* import point for nodes moved to `roxbot.nodes`
+* switch from `ruff` to `pylint` and `black`. Pylint catches more errors.
+
+
 ## v2.8.0
 
 * remove vectors extensions to avoid confusion
