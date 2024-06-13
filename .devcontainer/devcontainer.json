@@ -22,8 +22,8 @@
         "mhutchie.git-graph",
         "doi.fileheadercomment",
         "donjayamanne.githistory",
-        "ms-python.mypy-type-checker"
-
+        "ms-python.mypy-type-checker",
+        "ms-python.isort"
       ]
     }
   }
