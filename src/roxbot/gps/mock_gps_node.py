@@ -59,7 +59,7 @@ class MockGPS(Node):
 
     def _pose_cmd(self, args: dict) -> None:
         """set pose from mqtt command"""
-        self._log.info(f"Setting pose to {args=}")
+        self._log.debug(f"Setting pose to {args=}")
 
         if not isinstance(args, dict):
             self._log.error("Invalid argument type, must be dict")
