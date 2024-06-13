@@ -2,7 +2,7 @@
 
 from typing import Any, Callable, Dict, List, NamedTuple, Protocol, TypeAlias, Tuple
 
-from .vectors import Vector
+from rox_vectors import Vector
 from .gps.converters import (
     latlon_to_enu,
     theta_to_heading,

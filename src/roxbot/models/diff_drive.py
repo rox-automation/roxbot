@@ -7,7 +7,7 @@ Copyright (c) 2024 ROX Automation - Jev Kuznetsov
 
 from typing import Tuple
 
-from roxbot.vectors import Vector
+from rox_vectors import Vector
 from roxbot.interfaces import Pose
 from .wheels import Wheel
 

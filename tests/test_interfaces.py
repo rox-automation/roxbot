@@ -1,7 +1,7 @@
 # type: ignore
 
 from roxbot import interfaces
-from roxbot.vectors import Vector
+from rox_vectors import Vector
 
 
 def test_machine():
