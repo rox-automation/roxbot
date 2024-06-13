@@ -8,6 +8,9 @@
     "source=/var/tmp/container-extensions,target=/home/dev/.vscode-server/extensions,type=bind,consistency=cached"
   ],
 
+  "containerEnv": {
+    "GPS_REF":"51.365948, 6.172037"
+  },
 
   // Configure tool-specific properties.
   "customizations": {
