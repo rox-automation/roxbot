@@ -37,7 +37,7 @@ def test_bridges() -> None:
 
 def test_nodes() -> None:
     from roxbot import Node
-    from roxbot.nodes import gps_node
+    from roxbot.gps import gps_node
 
     Node("test")
     gps_node.GpsNode()
