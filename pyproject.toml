@@ -76,3 +76,19 @@ omit = [
     "src/roxbot/cli.py",
     "src/roxbot/version.py",
 ]
+
+#------------------pylint configuration----------------
+[tool.pylint.messages_control]
+disable = [
+    "missing-module-docstring",
+    "missing-class-docstring",
+    "missing-function-docstring",
+    "invalid-name",
+    "logging-fstring-interpolation",
+    "unused-argument",
+    "import-outside-toplevel",
+    "broad-except",
+    "line-too-long",
+]
+[tool.pylint.typecheck]
+ignored-modules = ["orjson"]
