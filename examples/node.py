@@ -24,6 +24,7 @@ class NodeOne(Node):
         super().__init__()
 
         # add coroutines to run in main()
+        self._coros.append(self._on_init)
         self._coros.append(self.talker_coro)
 
     async def _on_init(self) -> None:

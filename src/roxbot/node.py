@@ -32,8 +32,6 @@ class Node:
     How to use:
         * create a Node child class, optionally provide a name
         * add coroutines to `self._coros` list in __init__
-        * implement _init() coroutine to run in main() if async init is needed
-
 
     """
 
@@ -45,13 +43,8 @@ class Node:
         # list of coroutines to run in main(). Append to this list in __init__ of derived class. Provide as a reference to the coro, not a call.
         self._coros: List[Callable] = [
             self.mqtt.main,
-            self._on_init,
             self._heartbeat,
         ]
-
-    async def _on_init(self) -> None:
-        """init coroutine to run in main(), re-implement in derived class"""
-        self._log.info("No specific init coroutine defined")
 
     async def _heartbeat(self) -> None:
         """periodic heartbeat"""
