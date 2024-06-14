@@ -40,6 +40,11 @@ class Node:
         self._log = logging.getLogger(self.name)
         self.mqtt = MqttAdapter()
 
+        # error and warning counters. Will be sent with heartbeat.
+        # increment on exceptions or warnings.
+        self.nr_errors = 0
+        self.nr_warnings = 0
+
         # list of coroutines to run in main(). Append to this list in __init__ of derived class. Provide as a reference to the coro, not a call.
         self._coros: List[Callable] = [
             self.mqtt.main,
@@ -54,7 +59,13 @@ class Node:
         while True:
             uptime = int(time.time() - t_start)
             await self.mqtt.publish(
-                cfg.heartbeat_topic, {"name": self.name, "uptime": uptime}
+                cfg.heartbeat_topic,
+                {
+                    "name": self.name,
+                    "errors": self.nr_errors,
+                    "warnings": self.nr_warnings,
+                    "uptime": uptime,
+                },
             )
             await asyncio.sleep(HEATBEAT_PERIOD)
 
