@@ -42,14 +42,14 @@ def theta_to_heading(angle_rad: float) -> float:
 
 def latlon_to_enu(latlon: Tuple[float, float]) -> Tuple[float, float]:
     if GPS_REF is None:
-        raise ValueError("GPS_REF not set")
+        raise EnvironmentError("GPS_REF not set")
     x, y, _ = geodetic2enu(latlon[0], latlon[1], 0, GPS_REF[0], GPS_REF[1], 0)
     return float(x), float(y)
 
 
 def enu_to_latlon(xy: Tuple[float, float]) -> Tuple[float, float]:
     if GPS_REF is None:
-        raise ValueError("GPS_REF not set")
+        raise EnvironmentError("GPS_REF not set")
     lat, lon, _ = enu2geodetic(xy[0], xy[1], 0, GPS_REF[0], GPS_REF[1], 0)
     return float(lat), float(lon)
 
