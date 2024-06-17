@@ -20,3 +20,13 @@ class MqttConfig(BaseSettings):
     log_topic: str = "/log"
     gps_position_topic: str = "/gps/position"
     gps_direction_topic: str = "/gps/direction"
+
+
+class PrecisionConfig(BaseSettings):
+    """precision settings"""
+
+    model_config = SettingsConfigDict(env_prefix="digits_")
+
+    position: int = 3
+    latlon: int = 8
+    angle: int = 4
