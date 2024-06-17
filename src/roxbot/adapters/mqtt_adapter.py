@@ -36,6 +36,8 @@ class MqttAdapter:
         """publish items from mqtt queue.
         an item must have .mqtt_message() and .mqtt_topic() methods"""
 
+        self._log.info("Starting mqtt publish loop")
+
         while True:
             item = await self._mqtt_queue.get()
             msg = item.message
@@ -49,7 +51,7 @@ class MqttAdapter:
     async def _receive_mqtt(self, client: mqtt.Client) -> None:
         """receive velocity setpoint from mqtt"""
 
-        self._log.debug("Starting mqtt receive loop")
+        self._log.info("Starting mqtt receive loop")
         async for message in client.messages:
             try:
                 self._log.debug(f"{message.topic=}, {message.payload=}")
@@ -116,6 +118,7 @@ class MqttAdapter:
         self._log.info(f"Connecting to {self.config.host}:{self.config.port}")
 
         async with mqtt.Client(self.config.host, port=self.config.port) as client:
+            self._log.info("Connected")
             self._client = client
             self._client_ready.set()
             async with asyncio.TaskGroup() as tg:

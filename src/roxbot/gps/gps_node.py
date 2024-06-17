@@ -4,8 +4,7 @@ GPS node listens to mqtt gps topics and aggregates dat
 
 Copyright (c) 2024 ROX Automation - Jev Kuznetsov
 """
-
-import logging
+from abc import ABC, abstractmethod
 import time
 
 import aiomqtt
@@ -14,21 +13,47 @@ import orjson
 from roxbot.config import MqttConfig
 from roxbot.exceptions import FixException, FixProblem
 from roxbot.interfaces import Pose
+from roxbot.node import Node
 
 
-class GpsNode:
-    """interface to gps mqtt data, works in meters and radians.
-    latlon conversion is done by the gps sender node"""
+class GpsNodeABC(ABC, Node):
+    """abstract base class for creating gps nodes"""
 
     def __init__(self) -> None:
-        self._log = logging.getLogger("gps_node")
+
+        super().__init__()
+
         self.last_update = 0.0  # last update time
         self.x = 0.0  # x position in meters
         self.y = 0.0  # y position in meters
         self.theta = 0.0  # heading in radians (data from gps, not adjusted)
         self.gps_qual = 0  # gps quality
 
-    async def _mqtt_loop(self) -> None:
+        self._coros.append(self._receive)
+
+    def get_pose(self, max_age: float = 1.0) -> Pose:
+        """returns pose or raises FixException if data is too old"""
+        if time.time() - self.last_update > max_age:
+            raise FixException(FixProblem.OLD_FIX)
+
+        if self.gps_qual != 4:
+            raise FixException(FixProblem.NO_RTK_FIX)
+
+        return Pose(self.x, self.y, self.theta)
+
+    @abstractmethod
+    async def _receive(self) -> None:
+        """receive gps data"""
+
+
+class GpsNode(GpsNodeABC):
+    """interface to gps mqtt data, works in meters and radians.
+    latlon conversion is done by the gps sender node"""
+
+    def __init__(self) -> None:  # pylint: disable=useless-super-delegation
+        super().__init__()
+
+    async def _receive(self) -> None:
         """receive mqtt messages"""
         cfg = MqttConfig()
 
@@ -55,20 +80,7 @@ class GpsNode:
 
                 except Exception as e:
                     self._log.error(e)
-
-    def get_pose(self, max_age: float = 1.0) -> Pose:
-        """returns pose or raises FixException if data is too old"""
-        if time.time() - self.last_update > max_age:
-            raise FixException(FixProblem.OLD_FIX)
-
-        if self.gps_qual != 4:
-            raise FixException(FixProblem.NO_RTK_FIX)
-
-        return Pose(self.x, self.y, self.theta)
-
-    async def main(self) -> None:
-        """main coroutine"""
-        await self._mqtt_loop()
+                    self.nr_errors += 1
 
 
 if __name__ == "__main__":
