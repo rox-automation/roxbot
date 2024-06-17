@@ -80,6 +80,7 @@ class GpsNode(GpsNodeABC):
 
                 except Exception as e:
                     self._log.error(e)
+                    self.nr_errors += 1
 
 
 if __name__ == "__main__":
