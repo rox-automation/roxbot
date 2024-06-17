@@ -54,6 +54,29 @@ def enu_to_latlon(xy: Tuple[float, float]) -> Tuple[float, float]:
     return float(lat), float(lon)
 
 
+def _nmea_to_decimal_degrees(nmea_coord: str, degrees_index: int) -> float:
+    """convert nmea coordinate to decimal degrees"""
+
+    # Split the NMEA coordinate into degrees and minutes
+    c_deg = int(nmea_coord[:degrees_index])
+    c_min = float(nmea_coord[degrees_index:])
+
+    # Convert to decimal degrees
+    decimal_degrees = c_deg + c_min / 60.0
+
+    return decimal_degrees
+
+
+def parse_nmea_lat(nmea_coord: str) -> float:
+    """parse NMEA latitude coordinate"""
+    return _nmea_to_decimal_degrees(nmea_coord, 2)
+
+
+def parse_nmea_lon(nmea_coord: str) -> float:
+    """parse NMEA longitude coordinate"""
+    return _nmea_to_decimal_degrees(nmea_coord, 3)
+
+
 class GpsConverter:
     """coordinate converter (lat,lon) to (xEast,yNorth). wrapper around pymap3d"""
 
