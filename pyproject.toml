@@ -25,7 +25,6 @@ dependencies = [
     "aiomqtt",
     "click",
     "coloredlogs",
-    "numpy",
     "orjson",
     "pydantic-settings",
     "pydantic",

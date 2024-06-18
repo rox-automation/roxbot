@@ -2,7 +2,6 @@ aiomqtt
 click
 coloredlogs
 mypy
-numpy
 orjson
 pydantic
 pydantic-settings
