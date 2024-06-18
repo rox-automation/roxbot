@@ -17,7 +17,6 @@ import logging
 from typing import Any
 
 from roxbot.adapters.mqtt_adapter import MqttAdapter
-from roxbot.interfaces import BridgeProtocol
 from roxbot.utils import run_main_async
 
 log = logging.getLogger("main")
@@ -32,7 +31,7 @@ def callback_fcn(args: Any) -> None:
     log.info(f"Running callback with {args=}")
 
 
-async def send_messages(bridge: BridgeProtocol) -> None:
+async def send_messages(bridge: MqttAdapter) -> None:
     """send test messages to the mqtt broker"""
 
     counter = 0
@@ -46,7 +45,7 @@ async def send_messages(bridge: BridgeProtocol) -> None:
 
 
 async def main() -> None:
-    bridge: BridgeProtocol = MqttAdapter()
+    bridge = MqttAdapter()
     async with asyncio.TaskGroup() as tg:
         tg.create_task(bridge.main())
 
