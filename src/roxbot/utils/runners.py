@@ -15,11 +15,18 @@ import coloredlogs
 from roxbot import LOG_FORMAT
 
 
-def run_main_async(coro: Coroutine[Any, Any, None]) -> None:
+def run_main_async(
+    coro: Coroutine[Any, Any, None], silence_loggers: list[str] | None = None
+) -> None:
     """convenience function to avoid code duplication"""
     loglevel = os.environ.get("LOGLEVEL", "INFO").upper()
     coloredlogs.install(level=loglevel, fmt=LOG_FORMAT)
     logging.info(f"Log level set to {loglevel}")
+
+    if silence_loggers:
+        for logger in silence_loggers:
+            logging.info(f"Silencing logger: {logger}")
+            logging.getLogger(logger).setLevel(logging.CRITICAL)
 
     try:
         asyncio.run(coro)
