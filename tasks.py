@@ -4,7 +4,7 @@ from click import prompt
 from invoke import task
 
 # Constants
-CI_IMG = "roxbot-ci"
+CI_IMG = "roxauto/python-ci"
 MKDOCS_IMG = "roxbot-mkdocs"
 
 
@@ -61,11 +61,13 @@ def build(ctx):
 @task
 def ci(ctx):
     """
-    Build and run a Docker container locally to simulate the Continuous Integration process.
+    run ci locally in a fresh container
 
     """
-    ctx.run(f"docker build -t {CI_IMG} -f docker/ci/Dockerfile .")
-    ctx.run(f"docker run {CI_IMG}")
+    # get script directory
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+
+    ctx.run(f"docker run --rm -v {script_dir}:/workspace {CI_IMG}")
 
 
 @task
