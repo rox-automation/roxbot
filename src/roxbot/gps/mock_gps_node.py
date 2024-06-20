@@ -81,13 +81,7 @@ class MockGPS(Node):
             ts = timestamp()
 
             position = PositionData(
-                lat,
-                lon,
-                self._pose.x,
-                self._pose.y,
-                self.fix_quality,
-                datetime.now().strftime("%H:%M:%S"),
-                ts,
+                lat, lon, self._pose.x, self._pose.y, self.fix_quality, ts
             )
             await self.mqtt.publish(MQTT_CFG.gps_position_topic, position.to_dict())
 
