@@ -12,7 +12,6 @@ Copyright (c) 2024 ROX Automation - Jev Kuznetsov
 
 import asyncio
 import time
-from datetime import datetime
 from dataclasses import dataclass
 
 from roxbot import Node
