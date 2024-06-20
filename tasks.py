@@ -1,10 +1,10 @@
 # type: ignore
 import os
+import time
 from click import prompt
 from invoke import task
 
 # Constants
-CI_IMG = "roxauto/python-ci"
 MKDOCS_IMG = "roxbot-mkdocs"
 
 
@@ -59,21 +59,39 @@ def build(ctx):
 
 
 @task
-def ci(ctx):
-    """
-    run ci locally in a fresh container
-
-    """
-    # get script directory
-    script_dir = os.path.dirname(os.path.realpath(__file__))
-
-    ctx.run(f"docker run --rm -v {script_dir}:/workspace {CI_IMG}")
-
-
-@task
 def uml(ctx):
     """
     Generate UML diagrams from the source code using pyreverse.
     """
     ctx.run("mkdir -p docs/uml")
     ctx.run("pyreverse src/roxbot -o png -d docs/uml")
+
+
+@task
+def ci(ctx):
+    """
+    run ci locally in a fresh container
+
+    """
+    t_start = time.time()
+    # get script directory
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    try:
+        ctx.run(f"docker run --rm -v {script_dir}:/workspace roxauto/python-ci")
+    finally:
+        t_end = time.time()
+        print(f"CI run took {t_end - t_start:.1f} seconds")
+
+
+@task(pre=[ci])
+def publish(ctx):
+    """publish package to pypi"""
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+
+    token = os.getenv("PYPI_TOKEN")
+    if not token:
+        raise ValueError("PYPI_TOKEN environment variable is not set")
+
+    ctx.run(
+        f"docker run --rm -e PYPI_TOKEN={token} -v {script_dir}:/workspace roxauto/python-ci /scripts/publish.sh"
+    )
