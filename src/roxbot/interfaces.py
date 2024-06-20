@@ -1,6 +1,7 @@
 """Common interface definitions"""
 
 from typing import Any, Callable, Dict, List, NamedTuple, Protocol, TypeAlias, Tuple
+import time
 
 from rox_vectors import Vector
 from .gps.converters import (
@@ -49,6 +50,14 @@ class Pose(NamedTuple):
 class MqttMessage(NamedTuple):
     topic: str
     message: str | bytes
+
+
+class LatLonData(NamedTuple):
+
+    lat: float
+    lon: float
+    gps_qual: int = 0
+    ts: float = time.time()  # system time (epoch)
 
 
 class PositionData(NamedTuple):
