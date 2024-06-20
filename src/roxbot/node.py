@@ -28,6 +28,8 @@ class Node:
         * logging `self._log`
         * mqtt interface `self.mqtt`
         * periodic heartbeat
+        * cancellation of all tasks on .stop()
+        * lock to avoid starting a node multple times
 
     How to use:
         * create a Node child class, optionally provide a name
@@ -51,6 +53,7 @@ class Node:
             self._heartbeat,
         ]
 
+        self._lock = asyncio.Lock()
         self._tasks: List[asyncio.Task] = []
 
     async def _heartbeat(self) -> None:
@@ -75,6 +78,11 @@ class Node:
         """main coroutine"""
         self._log.debug("starting main")
 
+        if self._lock.locked():
+            raise RuntimeError("Node is already running")
+
+        await self._lock.acquire()
+
         async with asyncio.TaskGroup() as tg:
             for coro in self._coros:
                 self._log.info(f"starting {coro}")
@@ -93,3 +101,4 @@ class Node:
             except asyncio.CancelledError:
                 self._log.info(f"Task {task} cancelled")
         self._log.info("Node stopped")
+        self._lock.release()
