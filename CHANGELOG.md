@@ -11,9 +11,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 
-## v3.7.0
+## v3.8
 
 * add `parent` option for creating mqtt adapters to create a descriptive logger name.
+
+## v3.7
+
+* allow only one start of `MqttAdapter`
 
 ## v3.6.0
 
