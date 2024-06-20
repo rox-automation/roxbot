@@ -10,7 +10,7 @@ Copyright (c) 2024 ROX Automation - Jev Kuznetsov
 import asyncio
 import warnings
 import logging
-from typing import Dict, Callable
+from typing import Dict, Callable, Any
 import orjson
 import aiomqtt as mqtt
 
@@ -21,8 +21,14 @@ from roxbot.interfaces import MqttMessage, JsonSerializableType
 class MqttAdapter:
     """MQTT bridge for communication between subsystems"""
 
-    def __init__(self, config: MqttConfig | None = None) -> None:
-        self._log = logging.getLogger(f"mqtt_interface_{id(self)}")
+    def __init__(
+        self, config: MqttConfig | None = None, parent: Any | None = None
+    ) -> None:
+        if parent is not None:
+            self._log = logging.getLogger(f"{parent.__class__.__name__}.mqtt")
+        else:
+            self._log = logging.getLogger("mqtt-adapter")
+
         self._topic_callbacks: Dict[str, Callable] = {}  # topic callbacks
 
         self.config = config or MqttConfig()
