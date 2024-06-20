@@ -9,6 +9,7 @@ Copyright (c) 2024 ROX Automation - Jev Kuznetsov
 import asyncio
 import aiomqtt as mqtt
 
+import logging
 from logging import LogRecord, Formatter, Logger
 from logging.handlers import QueueHandler
 
@@ -29,6 +30,11 @@ class MqttLogger:
             config (MqttConfig | None, optional): mqtt configuration. Defaults to None.
             logger (Logger | None, optional): logging.logger instance to attach handler. Defaults to None.
         """
+        if MqttLogger.instance_count > 0:
+            logging.warning(
+                "There is another instance of MqttLogger running. One should be enough."
+            )
+
         MqttLogger.instance_count += 1
 
         self.config = config or MqttConfig()
