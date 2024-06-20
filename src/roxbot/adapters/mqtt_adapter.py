@@ -22,7 +22,7 @@ class MqttAdapter:
     """MQTT bridge for communication between subsystems"""
 
     def __init__(
-        self, config: MqttConfig | None = None, parent: Any | None = None
+        self, parent: Any | None = None, config: MqttConfig | None = None
     ) -> None:
 
         self._parent = parent

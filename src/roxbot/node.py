@@ -40,7 +40,7 @@ class Node:
     def __init__(self, name: str | None = None) -> None:
         self.name = name or self.__class__.__name__
         self._log = logging.getLogger(self.name)
-        self.mqtt = MqttAdapter()
+        self.mqtt = MqttAdapter(self)
 
         # error and warning counters. Will be sent with heartbeat.
         # increment on exceptions or warnings.
