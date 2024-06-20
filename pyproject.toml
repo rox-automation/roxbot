@@ -1,11 +1,14 @@
 #-----------------pyproject.toml configuration----------------
 [build-system]
-requires = ["setuptools >= 61.0"]
+requires = ["setuptools >= 61.0", "wheel", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+
 
 [project]
 name = "roxbot"
-version = "3.3.1"
+dynamic = ["version"]
 description = "Pythonic robotics toolkit"
 authors = [
     {name = "ROX Automation", email = "dev@roxautomation.com"},
@@ -47,9 +50,6 @@ dev = [
     "pytest-cov",
     "pytest-asyncio"
 ]
-
-[tool.hatch.metadata.hooks.from-filesystem]
-packages = {include = ["roxbot"], from = "src"}
 
 
 #--------------mypy configuration----------------
