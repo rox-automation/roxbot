@@ -12,7 +12,9 @@ from .gps.converters import (
 )
 
 
-JsonSerializableType: TypeAlias = Dict[str, Any] | List[Any] | str | int | float | bool
+JsonSerializableType: TypeAlias = (
+    Dict[str, Any] | List[Any] | Tuple | str | int | float | bool
+)
 
 # -----------------data types-----------------
 
