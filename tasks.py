@@ -83,7 +83,7 @@ def ci(ctx):
         print(f"CI run took {t_end - t_start:.1f} seconds")
 
 
-@task(pre=[ci])
+@task
 def release(ctx):
     """publish package to pypi"""
     script_dir = os.path.dirname(os.path.realpath(__file__))
