@@ -52,7 +52,7 @@ class MqttMessage(NamedTuple):
     message: str | bytes
 
 
-class LatLonData(NamedTuple):
+class GpsLatlon(NamedTuple):
 
     lat: float
     lon: float
@@ -60,16 +60,22 @@ class LatLonData(NamedTuple):
     ts: float = time.time()  # system time (epoch)
 
 
+class GpsHeading(NamedTuple):
+
+    heading: float
+    heading_stdev: float = 0.0
+    ts: float = time.time()
+
+
 class PositionData(NamedTuple):
     """latitude and longitude data"""
 
     lat: float
     lon: float
-    x: float
-    y: float
-    gps_qual: int
-    time: str
-    ts: float  # system time (epoch)
+    x: float = 0.0
+    y: float = 0.0
+    gps_qual: int = 0
+    ts: float = time.time()  # system time (epoch)
 
     def to_dict(self) -> dict:
         return self._asdict()  # type: ignore # pylint: disable=no-member
@@ -81,7 +87,7 @@ class HeadingData(NamedTuple):
     heading: float
     heading_stdev: float
     theta: float
-    ts: float
+    ts: float = time.time()  # system time (epoch)
 
     def to_dict(self) -> dict:
         return self._asdict()  # type: ignore # pylint: disable=no-member
