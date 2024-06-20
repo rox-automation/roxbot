@@ -51,6 +51,8 @@ class Node:
             self._heartbeat,
         ]
 
+        self._tasks: List[asyncio.Task] = []
+
     async def _heartbeat(self) -> None:
         """periodic heartbeat"""
         t_start = time.time()
@@ -76,6 +78,18 @@ class Node:
         async with asyncio.TaskGroup() as tg:
             for coro in self._coros:
                 self._log.info(f"starting {coro}")
-                tg.create_task(coro())
+                task = tg.create_task(coro())
+                self._tasks.append(task)
 
         self._log.info("Main coroutine finished")
+
+    async def stop(self) -> None:
+        """cancel all running tasks"""
+        self._log.info("Stopping Node...")
+        for task in self._tasks:
+            task.cancel()
+            try:
+                await task
+            except asyncio.CancelledError:
+                self._log.info(f"Task {task} cancelled")
+        self._log.info("Node stopped")
