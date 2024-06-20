@@ -93,6 +93,10 @@ class MqttAdapter:
         """publish data to topic"""
         await self._mqtt_queue.put(MqttMessage(topic, orjson.dumps(data)))
 
+    def publish_nowait(self, topic: str, data: JsonSerializableType) -> None:
+        """publish data to topic without waiting"""
+        self._mqtt_queue.put_nowait(MqttMessage(topic, orjson.dumps(data)))
+
     async def subscribe(self, topic: str) -> None:
         """subscribe to topic"""
 
