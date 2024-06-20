@@ -18,6 +18,8 @@ from roxbot.config import MqttConfig
 class MqttLogger:
     """forward python log messages to an MQTT topic"""
 
+    instance_count = 0
+
     def __init__(
         self, logger: Logger | None = None, config: MqttConfig | None = None
     ) -> None:
@@ -27,6 +29,8 @@ class MqttLogger:
             config (MqttConfig | None, optional): mqtt configuration. Defaults to None.
             logger (Logger | None, optional): logging.logger instance to attach handler. Defaults to None.
         """
+        MqttLogger.instance_count += 1
+
         self.config = config or MqttConfig()
         self._mqtt_queue: asyncio.Queue[LogRecord] = asyncio.Queue()
 
@@ -63,3 +67,6 @@ class MqttLogger:
         """starting point to handle mqtt communication, starts send and recieve coroutines"""
 
         await self._publish_mqtt()
+
+    def __del__(self) -> None:
+        MqttLogger.instance_count -= 1
