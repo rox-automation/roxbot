@@ -16,7 +16,7 @@ from roxbot.config import MqttConfig
 
 
 class MqttLogger:
-    """MQTT bridge for communication between subsystems"""
+    """forward python log messages to an MQTT topic"""
 
     def __init__(
         self, logger: Logger | None = None, config: MqttConfig | None = None
