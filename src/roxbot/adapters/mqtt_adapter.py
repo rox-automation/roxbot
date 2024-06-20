@@ -32,6 +32,8 @@ class MqttAdapter:
 
         self._mqtt_queue: asyncio.Queue[MqttMessage] = asyncio.Queue(10)
 
+        self._is_running = False
+
     async def _publish_mqtt(self, client: mqtt.Client) -> None:
         """publish items from mqtt queue.
         an item must have .mqtt_message() and .mqtt_topic() methods"""
@@ -118,6 +120,10 @@ class MqttAdapter:
 
     async def main(self) -> None:
         """starting point to handle mqtt communication, starts send and recieve coroutines"""
+        if self._is_running:
+            raise RuntimeError("MqttAdapter is already running")
+
+        self._is_running = True
 
         self._log.info(f"Connecting to {self.config.host}:{self.config.port}")
 
