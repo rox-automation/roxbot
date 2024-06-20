@@ -11,6 +11,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 
+## v3.5.0
+
+* add `Node.stop()` to cancel all running tasks
+* implement lock to avoid multiple starts for `Node.main()`
+
+
+
 ## v3.4.0
 
 * add `GpsLatlon` and `GpsHeading` classes.
