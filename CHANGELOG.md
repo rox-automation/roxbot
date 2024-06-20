@@ -11,6 +11,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 
+## v3.7.0
+
+* add `parent` option for creating mqtt adapters to create a descriptive logger name.
+
 ## v3.6.0
 
 * add `MqttAdapter.publish_nowait` to work with synchronous code.

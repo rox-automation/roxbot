@@ -24,6 +24,8 @@ class MqttAdapter:
     def __init__(
         self, config: MqttConfig | None = None, parent: Any | None = None
     ) -> None:
+
+        self._parent = parent
         if parent is not None:
             self._log = logging.getLogger(f"{parent.__class__.__name__}.mqtt")
         else:
