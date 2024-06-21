@@ -6,10 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Planned
 
-* refactor `GpsNode` to use `Node` base class.
+
 
 
 ## Unreleased
+
+
+## v4.0
+
+* Refactor `GpsNode` back to a single class. Remove ABC.
+* remove heartbeat and error counters from `Node`.
+
 
 ## v3.8
 
@@ -36,9 +43,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 * remove `PositionData.time` it is already in timestamp.
 
 
-
 ## v3.3.0
 
+* refactor `GpsNode` to use `Node` base class.
 * add error and warning counters to `Node` class
 
 ## v3.2.0
