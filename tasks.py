@@ -32,7 +32,7 @@ def lint(ctx):
     """
     Perform static analysis on the source code to check for syntax errors and enforce style consistency.
     """
-    ctx.run("pylint -E src tests")
+    ctx.run("pylint -E src tests examples")
     ctx.run("mypy src")
 
 
