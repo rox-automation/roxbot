@@ -18,7 +18,7 @@ class UDP_Client:
 
         self._log = logging.getLogger(self.__class__.__name__)
 
-    def send(self, data: dict):
+    def send(self, data: dict) -> None:
         """send data to UDP server"""
         try:
             data["ts"] = round(time.time(), 3)
@@ -26,9 +26,9 @@ class UDP_Client:
         except Exception as e:  # pylint: disable=broad-except
             self._log.error(f"Failed to send data: {e}")
 
-    def close(self):
+    def close(self) -> None:
         """close socket"""
         self._sock.close()
 
-    def __del__(self):
+    def __del__(self) -> None:
         self.close()
