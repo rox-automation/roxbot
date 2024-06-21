@@ -4,7 +4,6 @@ GPS node listens to mqtt gps topics and aggregates dat
 
 Copyright (c) 2024 ROX Automation - Jev Kuznetsov
 """
-from abc import ABC, abstractmethod
 import time
 
 import aiomqtt
@@ -16,8 +15,9 @@ from roxbot.interfaces import Pose
 from roxbot.node import Node
 
 
-class GpsNodeABC(ABC, Node):
-    """abstract base class for creating gps nodes"""
+class GpsNode(Node):
+    """interface to gps mqtt data, works in meters and radians.
+    latlon conversion is done by the gps sender node"""
 
     def __init__(self) -> None:
 
@@ -28,6 +28,10 @@ class GpsNodeABC(ABC, Node):
         self.y = 0.0  # y position in meters
         self.theta = 0.0  # heading in radians (data from gps, not adjusted)
         self.gps_qual = 0  # gps quality
+
+        # counters
+        self.nr_errors = 0
+        self.nr_warnings = 0
 
         self._coros.append(self._receive)
 
@@ -40,18 +44,6 @@ class GpsNodeABC(ABC, Node):
             raise FixException(FixProblem.NO_RTK_FIX)
 
         return Pose(self.x, self.y, self.theta)
-
-    @abstractmethod
-    async def _receive(self) -> None:
-        """receive gps data"""
-
-
-class GpsNode(GpsNodeABC):
-    """interface to gps mqtt data, works in meters and radians.
-    latlon conversion is done by the gps sender node"""
-
-    def __init__(self) -> None:  # pylint: disable=useless-super-delegation
-        super().__init__()
 
     async def _receive(self) -> None:
         """receive mqtt messages"""
