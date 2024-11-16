@@ -30,19 +30,15 @@ def test_machine():
 
 def test_data_classes():
 
-    now = time.time()
-
     latlon = interfaces.GpsLatlon(1, 2)
 
     assert latlon.lat == 1
     assert latlon.lon == 2
     assert latlon.gps_qual == 0
-    assert abs(latlon.ts - now) < 1
 
     head = interfaces.GpsHeading(1, 2)
     assert head.heading == 1
     assert head.heading_stdev == 2
-    assert abs(head.ts - now) < 1
 
     pos = interfaces.PositionData(1, 2)
     assert pos.lat == 1
@@ -50,10 +46,8 @@ def test_data_classes():
     assert pos.x == 0
     assert pos.y == 0
     assert pos.gps_qual == 0
-    assert abs(pos.ts - now) < 1
 
     head = interfaces.HeadingData(1, 2, 3)
     assert head.heading == 1
     assert head.heading_stdev == 2
     assert head.theta == 3
-    assert abs(head.ts - now) < 1

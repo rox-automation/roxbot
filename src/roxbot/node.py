@@ -40,12 +40,13 @@ class Node:
         self.mqtt = MqttAdapter(parent=self)
 
         # list of coroutines to run in main(). Append to this list in __init__ of derived class. Provide as a reference to the coro, not a call.
-        self._coros: List[Callable] = [
-            self.mqtt.main,
-        ]
+        self._coros: List[Callable] = []
 
         self._main_started = False
         self._tasks: List[asyncio.Task] = []
+
+    async def _on_init(self) -> None:
+        """init coroutine to run in main(), override in derived class"""
 
     async def main(self) -> None:
         """main coroutine"""
@@ -55,6 +56,11 @@ class Node:
             raise RuntimeError("Node is already running")
 
         self._main_started = True
+
+        # start mqtt
+        self._tasks.append(asyncio.create_task(self.mqtt.main()))
+
+        await self._on_init()
 
         async with asyncio.TaskGroup() as tg:
             for coro in self._coros:

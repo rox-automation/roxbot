@@ -110,12 +110,13 @@ class MqttAdapter:
     async def subscribe(self, topic: str) -> None:
         """subscribe to topic"""
 
+        self._log.info(f"Subscribing to {topic}")
+
         await asyncio.wait_for(self._client_ready.wait(), timeout=1)
 
         if self._client is None:
             raise RuntimeError("MQTT client not initialized")
 
-        self._log.info(f"Subscribing to {topic}")
         await self._client.subscribe(topic)
 
     async def unsubscribe(self, topic: str) -> None:
