@@ -11,6 +11,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 
+## v4.1
+
+* add `Node._on_init(self)` coro, override to init nodes
+
 
 ## v4.0
 
