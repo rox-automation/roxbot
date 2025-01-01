@@ -1,5 +1,18 @@
 # ROXBOT - a Pythonic robotics toolkit
 
+---
+
+**!!! DEPRECATED !!!**
+
+This project has been deprecated, latest verison of the the code can be found in
+
+https://gitlab.com/roxautomation/machines/gamma 
+
+
+---
+
+
+
 ## What is this?
 
 Project `roxbot` is a handbook for robotcs developers. It is intended as a knowledge base, providing a series of examples, reusable library code and tips and tricks for building robotic systems.
